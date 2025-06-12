@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Aluno/teste/front/src/app/page.tsx"],"sourcesContent":["\"use client\"\r\n\r\n\r\nexport default function Home() {\r\n  return (\r\n     <main className=\"flex-grow\"style={{\r\n            backgroundImage: \"url('/pattern.png')\",\r\n            backgroundSize: \"center\",\r\n            backgroundPosition: \"center\",\r\n          }}>\r\n         \r\n          <div className=\"container mx-auto px-4 py-32\">\r\n            <h1 className=\"text-6xl font-bold text-black mb-4\">FoodFlow</h1>\r\n            <p className=\"text-4xl text-black\">catchphrase aqui</p>\r\n          </div>\r\n      \r\n      </main>\r\n  )\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;;AAGe,SAAS;IACtB,qBACG,6LAAC;QAAK,WAAU;QAAW,OAAO;YAC3B,iBAAiB;YACjB,gBAAgB;YAChB,oBAAoB;QACtB;kBAEA,cAAA,6LAAC;YAAI,WAAU;;8BACb,6LAAC;oBAAG,WAAU;8BAAqC;;;;;;8BACnD,6LAAC;oBAAE,WAAU;8BAAsB;;;;;;;;;;;;;;;;;AAK/C;KAfwB","debugId":null}}]
+}

@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Dispensa {
+  id             Int          @id @default(autoincrement())
+  nome           String       @db.VarChar(100)
+  quantidade     Int          @db.SmallInt
+  peso           Decimal      @db.Decimal(10, 2)
+  perecivel      Pereciveis @default(NÃO)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt()
+  destaque       Boolean      @default(true)
+  usuarios      Usuario[]
+  @@map("Dispensa")
+}
+
+model Alimentos {
+  id             Int          @id @default(autoincrement())
+  nome           String       @db.VarChar(100)
+  peso           Decimal      @db.Decimal(10, 2)
+  perecivel      Pereciveis @default(NÃO)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt()
+  destaque       Boolean      @default(true)
+  propostas      Proposta[]
+  @@map("Alimento")
+}
+
+enum Pereciveis {
+  NÃO
+  SIM
+}
+
+model Usuario {
+  id            String   @db.VarChar(36) @id @default(uuid())
+  nome          String   @db.VarChar(60)
+  email         String   @db.VarChar(40)
+  senha         String   @db.VarChar(60)   
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt  
+  propostas     Proposta[]
+  dispensa Dispensa[]
+  @@map("clientes")
+}
+
+model Proposta {
+  id          Int       @id @default(autoincrement())
+  cliente     Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId   String    @db.VarChar(36)
+  alimentos          Alimentos        @relation(fields: [alimentoId], references: [id])
+  alimentoId        Int
+  descricao   String    @db.VarChar(255)
+  resposta    String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt  
+  @@map("propostas")
+}
