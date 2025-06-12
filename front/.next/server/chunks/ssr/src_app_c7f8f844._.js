@@ -71,18 +71,27 @@ function ItemModal() {
     const [isOpen, setIsOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const { register, handleSubmit } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hook$2d$form$2f$dist$2f$index$2e$esm$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useForm"])();
     async function tryinput(data) {
-        const response = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/alimentos`, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify({
-                nome: data.nome,
-                peso: data.peso
-            })
-        });
+        try {
+            const response = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/alimentos`, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    nome: data.nome,
+                    peso: data.peso
+                })
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Erro ao enviar:", errorData);
+            } else {
+                console.log("Item enviado com sucesso!");
+            }
+        } catch (error) {
+            console.error("Erro de rede ou outra falha:", error);
+        }
     }
-    ;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -91,7 +100,7 @@ function ItemModal() {
                 children: "Adicione um item"
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                lineNumber: 37,
+                lineNumber: 47,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -105,7 +114,7 @@ function ItemModal() {
                             children: "Nome do alimento"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                            lineNumber: 41,
+                            lineNumber: 51,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -116,7 +125,7 @@ function ItemModal() {
                             ...register('nome')
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                            lineNumber: 44,
+                            lineNumber: 54,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -124,7 +133,7 @@ function ItemModal() {
                             children: "Qtd\\Kg"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                            lineNumber: 50,
+                            lineNumber: 60,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -135,7 +144,7 @@ function ItemModal() {
                             ...register('peso')
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                            lineNumber: 53,
+                            lineNumber: 63,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -144,18 +153,18 @@ function ItemModal() {
                             children: "Enviar item"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                            lineNumber: 59,
+                            lineNumber: 69,
                             columnNumber: 7
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                    lineNumber: 40,
+                    lineNumber: 50,
                     columnNumber: 5
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/addItemmodal.tsx",
-                lineNumber: 38,
+                lineNumber: 48,
                 columnNumber: 7
             }, this)
         ]

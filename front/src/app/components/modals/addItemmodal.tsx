@@ -21,14 +21,24 @@ export default function ItemModal() {
   
 
   async function tryinput(data: inputs) {
-      const response = await 
-        fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos`, {
-          headers: {"Content-Type": "application/json"},
-          method: "POST",
-          body: JSON.stringify({ nome: data.nome, peso: data.peso })
-        })
-
- };
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos`, {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ nome: data.nome, peso: data.peso }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Erro ao enviar:", errorData);
+      } else {
+        console.log("Item enviado com sucesso!");
+      }
+    } catch (error) {
+      console.error("Erro de rede ou outra falha:", error);
+    }
+  }
+  
 
 
 return (
