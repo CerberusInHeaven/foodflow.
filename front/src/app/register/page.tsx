@@ -1,24 +1,25 @@
 "use client"
+import React from 'react'
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useClienteStore } from "@/app/context/ClienteContext"
 import { useRouter } from "next/navigation"
+import { Lock, Mail, User, ArrowRight } from 'lucide-react'
 
+// Define o tipo para os dados do formulário de registro
 type Inputs = {
     nome: string
     email: string
     senha: string
-    manter: boolean
 }
 
-export default function Login() {
+export default function Registro() {
     const { register, handleSubmit } = useForm<Inputs>()    
-    const { logaCliente } = useClienteStore()
-
     const router = useRouter()
 
-    async function verificaLogin(data: Inputs) {
-        // alert(`${data.email} ${data.senha} ${data.manter}`)
+    // Função para lidar com a criação da conta
+    async function criaConta(data: Inputs) {
+        // Sua lógica original para enviar os dados para a API
         const response = await 
           fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes`, {
             headers: {"Content-Type": "application/json"},
@@ -26,119 +27,93 @@ export default function Login() {
             body: JSON.stringify({ nome: data.nome, email: data.email, senha: data.senha })
           })
         
-        if (response.status == 200) {
-           
-            const dados = await response.json()
-
+        // Status 201 (Created) é o mais comum para novos registros
+        if (response.status == 201 || response.status == 200) {
+            toast.success("Conta criada com sucesso! Por favor, faça o login.")
+            router.push("/login") // Redireciona para a página de login
         } else {
-            toast.error("Erro...")
+            toast.error("Erro... Não foi possível criar sua conta.")
         }
-        router.push("/")
     }
 
     return (
-       <div
-  className="min-h-screen relative"
-  style={{
-    backgroundImage: "url(/pattern.png)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "repeat",
-  }}
->
-  {/* Semi-transparent overlay */}
-  <div className="absolute inset-0 bg-white/80" />
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 font-sans">
+            {/* Container do formulário */}
+            <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg">
+                
+                {/* Cabeçalho */}
+                <div className="text-center">
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                        Crie sua Conta
+                    </h1>
+                    <p className="mt-2 text-slate-600">
+                        É rápido e fácil. Vamos começar.
+                    </p>
+                </div>
 
-  {/* Login form container */}
-  <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-    <div className="w-full max-w-sm space-y-6 bg-white/90 p-8 rounded-lg backdrop-blur-sm">
-      {/* Heading */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-[#2c2c2c] mb-8">Dados de Acesso do Cliente</h1>
-      </div>
+                {/* Formulário */}
+                <form className="space-y-6" onSubmit={handleSubmit(criaConta)}>
+                    
+                    {/* Campo de Nome */}
+                    <div className="relative">
+                        <label htmlFor="nome" className="sr-only">Seu nome</label>
+                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                        <input
+                            id="nome"
+                            type="text"
+                            placeholder="Digite seu nome completo"
+                            required
+                            {...register("nome")}
+                            className="w-full h-12 pl-12 pr-4 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 transition-all focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                        />
+                    </div>
 
-      {/* Form */}
-      <form className="space-y-6" onSubmit={handleSubmit(verificaLogin)}>
-        {/* Email */}
-        
-         <div className="space-y-2">
-          <label htmlFor="text" className="block text-[#2c2c2c] font-medium">
-            Nome
-          </label>
-          <input
-            id="name"
-            type="text"
-            placeholder="Digite seu e-mail"
-            required
-            {...register("nome")}
-            className="w-full bg-[#f5f5f5] border border-[#b3b3b3] text-[#757575] placeholder:text-[#757575] rounded-md h-12 px-3 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:border-transparent"
-          />
+                    {/* Campo de E-mail */}
+                    <div className="relative">
+                        <label htmlFor="email" className="sr-only">Seu e-mail</label>
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Digite seu e-mail"
+                            required
+                            {...register("email")}
+                            className="w-full h-12 pl-12 pr-4 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 transition-all focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                        />
+                    </div>
+
+                    {/* Campo de Senha */}
+                    <div className="relative">
+                        <label htmlFor="password" className="sr-only">Crie uma Senha</label>
+                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Crie uma senha forte"
+                            required
+                            {...register("senha")}
+                            className="w-full h-12 pl-12 pr-4 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 transition-all focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                        />
+                    </div>
+
+                    {/* Botão de Registro */}
+                    <button
+                        type="submit"
+                        className="inline-flex w-full items-center justify-center gap-2 h-12 px-6 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 transition-all shadow-lg shadow-green-500/20 hover:shadow-green-500/30 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                    >
+                        <span>Criar Conta</span>
+                        <ArrowRight className="w-5 h-5" />
+                    </button>
+
+                    {/* Link para Login */}
+                    <p className="text-center text-sm text-slate-600">
+                        Já possui uma conta?{" "}
+                        <a href="/login" className="font-semibold text-green-600 hover:underline">
+                            Faça login
+                        </a>
+                    </p>
+                </form>
+            </div>
         </div>
-        
-        <div className="space-y-2">
-          <label htmlFor="email" className="block text-[#2c2c2c] font-medium">
-            Seu e-mail
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            required
-            {...register("email")}
-            className="w-full bg-[#f5f5f5] border border-[#b3b3b3] text-[#757575] placeholder:text-[#757575] rounded-md h-12 px-3 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:border-transparent"
-          />
-        </div>
-
-        {/* Senha */}
-        <div className="space-y-2">
-          <label htmlFor="password" className="block text-[#2c2c2c] font-medium">
-            Senha de Acesso
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Digite sua senha"
-            required
-            {...register("senha")}
-            className="w-full bg-[#f5f5f5] border border-[#b3b3b3] text-[#757575] placeholder:text-[#757575] rounded-md h-12 px-3 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:border-transparent"
-          />
-        </div>
-
-        {/* Manter Conectado + Esqueceu a senha */}
-        <div className="flex items-center justify-between text-sm">
-          <label className="flex items-center space-x-2 text-[#2c2c2c]">
-            <input
-              id="remember"
-              type="checkbox"
-              {...register("manter")}
-              className="w-4 h-4 border border-[#b3b3b3] rounded bg-[#f5f5f5] focus:ring-2 focus:ring-[#40E0D0]"
-            />
-            <span>Manter Conectado</span>
-          </label>
-          <a href="#" className="text-[#2c2c2c] hover:underline">
-            Esqueceu sua senha?
-          </a>
-        </div>
-
-        {/* Botão de Login */}
-        <button
-          type="submit"
-          className="w-full bg-[#303030] hover:bg-[#1e1e1e] text-white font-medium h-12 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:ring-offset-2"
-        >
-          Entrar
-        </button>
-
-        {/* Link de cadastro */}
-        <p className="text-sm text-center text-[#757575]">
-          Ainda não possui conta?{" "}
-          <a href="#" className="font-medium text-[#2c2c2c] hover:underline">
-            Cadastre-se
-          </a>
-        </p>
-      </form>
-    </div>
-  </div>
-</div>
-
     )
 }

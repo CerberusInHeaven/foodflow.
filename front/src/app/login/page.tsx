@@ -1,8 +1,22 @@
 "use client"
+import React from 'react'
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useClienteStore } from "@/app/context/ClienteContext"
 import { useRouter } from "next/navigation"
+import { Lock, Mail, ArrowRight } from 'lucide-react'
+
+// --- Simulação de Dependências Externas (para o Canvas) ---
+// No seu projeto, remova esta parte e use as suas importações originais.
+const useClienteStoreSimulado = () => ({
+  logaCliente: (dados: any) => console.log("Cliente logado (simulado):", dados),
+});
+
+const useRouterSimulado = () => ({
+  push: (path: string) => console.log(`Redirecionando para ${path} (simulado)`),
+});
+// --- Fim da Simulação ---
+
 
 type Inputs = {
     email: string
@@ -12,12 +26,13 @@ type Inputs = {
 
 export default function Login() {
     const { register, handleSubmit } = useForm<Inputs>()    
-    const { logaCliente } = useClienteStore()
-
-    const router = useRouter()
+    
+    // Altere para as suas importações originais no seu projeto
+    const { logaCliente } = useClienteStoreSimulado()
+    const router = useRouterSimulado()
 
     async function verificaLogin(data: Inputs) {
-        // alert(`${data.email} ${data.senha} ${data.manter}`)
+        // A sua lógica original permanece aqui...
         const response = await 
           fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes/login`, {
             headers: {"Content-Type": "application/json"},
@@ -25,27 +40,18 @@ export default function Login() {
             body: JSON.stringify({ email: data.email, senha: data.senha })
           })
         
-        // console.log(response)
         if (response.status == 200) {
-            // toast.success("Ok!")            
             const dados = await response.json()
-
-            // "coloca" os dados do cliente no contexto
             logaCliente(dados)
             
-            // se o cliente indicou que quer se manter conectado
-            // salvamos os dados (id) dele em localStorage
             if (data.manter) {
                 localStorage.setItem("clienteKey", dados.id)
             } else {
-                // se indicou que não quer permanecer logado e tem
-                // uma chave (anteriormente) salva, remove-a
                 if (localStorage.getItem("clienteKey")) {
                     localStorage.removeItem("clienteKey")
                 }
             }
-
-            // carrega a página principal, após login do cliente
+            toast.success("Login realizado com sucesso!")
             router.push("/perfil")
         } else {
             toast.error("Erro... Login ou senha incorretos")
@@ -53,93 +59,85 @@ export default function Login() {
     }
 
     return (
-       <div
-  className="min-h-screen relative"
-  style={{
-    backgroundImage: "url(/pattern.png)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "repeat",
-  }}
->
-  {/* Semi-transparent overlay */}
-  <div className="absolute inset-0 bg-white/80" />
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 font-sans">
+            {/* Container do formulário */}
+            <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg">
+                
+                {/* Cabeçalho */}
+                <div className="text-center">
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                        Bem-vindo de volta!
+                    </h1>
+                    <p className="mt-2 text-slate-600">
+                        Acesse sua conta para continuar.
+                    </p>
+                </div>
 
-  {/* Login form container */}
-  <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-    <div className="w-full max-w-sm space-y-6 bg-white/90 p-8 rounded-lg backdrop-blur-sm">
-      {/* Heading */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-[#2c2c2c] mb-8">Dados de Acesso do Cliente</h1>
-      </div>
+                {/* Formulário */}
+                <form className="space-y-6" onSubmit={handleSubmit(verificaLogin)}>
+                    
+                    {/* Campo de E-mail */}
+                    <div className="relative">
+                        <label htmlFor="email" className="sr-only">Seu e-mail</label>
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Digite seu e-mail"
+                            required
+                            {...register("email")}
+                            className="w-full h-12 pl-12 pr-4 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 transition-all focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                        />
+                    </div>
 
-      {/* Form */}
-      <form className="space-y-6" onSubmit={handleSubmit(verificaLogin)}>
-        {/* Email */}
-        <div className="space-y-2">
-          <label htmlFor="email" className="block text-[#2c2c2c] font-medium">
-            Seu e-mail
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            required
-            {...register("email")}
-            className="w-full bg-[#f5f5f5] border border-[#b3b3b3] text-[#757575] placeholder:text-[#757575] rounded-md h-12 px-3 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:border-transparent"
-          />
+                    {/* Campo de Senha */}
+                    <div className="relative">
+                        <label htmlFor="password" className="sr-only">Senha de Acesso</label>
+                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Digite sua senha"
+                            required
+                            {...register("senha")}
+                            className="w-full h-12 pl-12 pr-4 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 transition-all focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                        />
+                    </div>
+
+                    {/* Opções Adicionais */}
+                    <div className="flex items-center justify-between text-sm">
+                        <label className="flex items-center gap-2 text-slate-600 select-none cursor-pointer hover:text-slate-800">
+                            <input
+                                id="manter"
+                                type="checkbox"
+                                {...register("manter")}
+                                className="h-4 w-4 rounded border-slate-300 bg-slate-100 text-green-600 focus:ring-green-600 focus:ring-offset-0"
+                            />
+                            <span>Manter conectado</span>
+                        </label>
+                        <a href="#" className="font-medium text-green-600 hover:underline">
+                            Esqueceu a senha?
+                        </a>
+                    </div>
+
+                    {/* Botão de Login */}
+                    <button
+                        type="submit"
+                        className="inline-flex w-full items-center justify-center gap-2 h-12 px-6 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 transition-all shadow-lg shadow-green-500/20 hover:shadow-green-500/30 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                    >
+                        <span>Entrar</span>
+                        <ArrowRight className="w-5 h-5" />
+                    </button>
+
+                    {/* Link para Cadastro */}
+                    <p className="text-center text-sm text-slate-600">
+                        Ainda não possui uma conta?{" "}
+                        <a href="#" className="font-semibold text-green-600 hover:underline">
+                            Cadastre-se
+                        </a>
+                    </p>
+                </form>
+            </div>
         </div>
-
-        {/* Senha */}
-        <div className="space-y-2">
-          <label htmlFor="password" className="block text-[#2c2c2c] font-medium">
-            Senha de Acesso
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Digite sua senha"
-            required
-            {...register("senha")}
-            className="w-full bg-[#f5f5f5] border border-[#b3b3b3] text-[#757575] placeholder:text-[#757575] rounded-md h-12 px-3 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:border-transparent"
-          />
-        </div>
-
-        {/* Manter Conectado + Esqueceu a senha */}
-        <div className="flex items-center justify-between text-sm">
-          <label className="flex items-center space-x-2 text-[#2c2c2c]">
-            <input
-              id="remember"
-              type="checkbox"
-              {...register("manter")}
-              className="w-4 h-4 border border-[#b3b3b3] rounded bg-[#f5f5f5] focus:ring-2 focus:ring-[#40E0D0]"
-            />
-            <span>Manter Conectado</span>
-          </label>
-          <a href="#" className="text-[#2c2c2c] hover:underline">
-            Esqueceu sua senha?
-          </a>
-        </div>
-
-        {/* Botão de Login */}
-        <button
-          type="submit"
-          className="w-full bg-[#303030] hover:bg-[#1e1e1e] text-white font-medium h-12 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#40E0D0] focus:ring-offset-2"
-        >
-          Entrar
-        </button>
-
-        {/* Link de cadastro */}
-        <p className="text-sm text-center text-[#757575]">
-          Ainda não possui conta?{" "}
-          <a href="#" className="font-medium text-[#2c2c2c] hover:underline">
-            Cadastre-se
-          </a>
-        </p>
-      </form>
-    </div>
-  </div>
-</div>
-
     )
 }

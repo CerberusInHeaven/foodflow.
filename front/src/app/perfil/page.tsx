@@ -1,81 +1,84 @@
 "use client"
-import Image from "next/image"
-import { Heart, Twitter, Instagram, Youtube, Linkedin } from "lucide-react"
+import React from 'react'
+import { Plus, MessageSquareQuote, User } from "lucide-react"
 import { useClienteStore } from "../context/ClienteContext"
-
 import ClientModal from "../components/modals/clientModal"
-export default function perfil() {
+
+// Componente da Página de Perfil
+export default function Perfil() {
   const { cliente } = useClienteStore()
+
+  // Função para pegar a primeira letra do nome para o avatar
+  const getInitial = (name: string | undefined): string => {
+    if (!name) return 'U' // 'U' de Usuário como fallback
+    return name.charAt(0).toUpperCase()
+  }
+
+  // Dados mocados para os cards da dispensa (mantidos do seu código)
+  const dispensas = [
+    { id: 1, nome: 'Cozinha Principal', data: 'Atualizado em 12 de Jun' },
+    { id: 2, nome: 'Estoque do Fim de Semana', data: 'Atualizado em 10 de Jun' },
+    { id: 3, nome: 'Dispensa de Emergência', data: 'Atualizado em 5 de Jun' },
+  ]
+
   return (
-    <div className="min-h-screen bg-[#ffffff]">
-    
-     <section className="px-6 py-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-orange-300 to-orange-500">
-                <div className="absolute top-4 left-4 z-10">
-                  <div className="w-10 h-10 bg-[#2c2c2c] rounded-full flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-[#ffffff]" />
-                  </div>
-                </div>
-                <Image
-                  src="/fieri.jpg"
-                  alt="Hero image"
-                  width={500}
-                  height={400}
-                  className="w-full h-[400px] object-cover"
-                />
+    <main className="min-h-screen bg-slate-50 font-sans">
+      
+      {/* Seção Superior: Perfil do Usuário */}
+      <section className="bg-white border-b border-slate-200">
+        <div className="container mx-auto px-6 py-12 md:py-16">
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
+            
+            {/* NOVO AVATAR DO PERFIL */}
+            <div className="md:col-span-1 flex justify-center">
+              <div className="w-40 h-40 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
+                <span className="text-6xl font-bold text-white select-none">
+                  {getInitial(cliente?.nome)}
+                </span>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h1 className="text-4xl lg:text-5xl font-bold text-[#000000] leading-tight">
-                {cliente?.nome}
-                <br />
-                CARGOAQUI
-              </h1>
-              <div className="bg-[#f5f5f5] rounded-lg p-4">
-                <p className="text-[#757575] text-sm">To aqui pq ta muito dificil organizar as coisas em FLAVORTOWN™</p>
+            {/* Informações do Perfil */}
+            <div className="md:col-span-2 space-y-6 text-center md:text-left">
+              <div className="space-y-2">
+                <p className="font-semibold text-green-600">Diretor(a) de Operações</p>
+                <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                  {cliente?.nome || 'Nome do Usuário'}
+                </h1>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* aqui fica as instancias heinnnnnnn*/}
-      <section
-        className="px-6 py-12"
-        style={{
-          backgroundImage: `url("pattern.png")`,
-          backgroundSize: "center",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-[#000000]">Suas Dispensas</h2>
-            <div className="">
-              <ClientModal/>
-            </div>
+      {/* Seção Inferior: Dispensas */}
+      <section className="container mx-auto px-6 py-12 md:py-16">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+          <h2 className="text-3xl font-bold text-gray-900">Suas Dispensas</h2>
+          
+          {/* O seu modal continua aqui, sem alterações na chamada */}
+          <div>
+            <ClientModal />
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-[#ffffff] border border-[#e3e3e3] rounded-lg shadow-sm">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-[#000000] mb-4">Cozinha {i}</h3>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-[#d9d9d9] rounded-full"></div>
-                    <span className="text-[#757575] text-sm">Date</span>
-                  </div>
-                </div>
+        </div>
+
+        {/* Grid de Cards das Dispensas */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {dispensas.map((dispensa) => (
+            <div key={dispensa.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
+              <div className="flex-grow">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{dispensa.nome}</h3>
+                <p className="text-slate-500 text-sm">{dispensa.data}</p>
               </div>
-            ))}
-          </div>
+              <a href="#" className="mt-6 inline-block text-green-600 font-semibold hover:underline self-start">
+                Ver detalhes →
+              </a>
+            </div>
+          ))}
         </div>
       </section>
 
-    </div>
+    </main>
   )
 }

@@ -1,176 +1,65 @@
-import Link from "next/link"
-import { Twitter, Instagram, Youtube, Linkedin } from "lucide-react"
-export function footerzinho(){
-    return(
-         /* Footer */
-      <footer className="bg-[#f5f5f5] ">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between">
-            <div className="mb-8 md:mb-0">
-              <Link href="/" className="flex items-center mb-6">
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-black"
-                >
-                  <path
-                    d="M12 8C12 5.79086 13.7909 4 16 4H24C26.2091 4 28 5.79086 28 8V32C28 34.2091 26.2091 36 24 36H16C13.7909 36 12 34.2091 12 32V8Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  />
-                  <path d="M12 14H28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M12 26H28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </Link>
-              <div className="flex space-x-4">
-                <Link href="#" className="text-black hover:text-gray-600">
-                  <Twitter size={20} />
-                  <span className="sr-only">Twitter</span>
-                </Link>
-                <Link href="#" className="text-black hover:text-gray-600">
-                  <Instagram size={20} />
-                  <span className="sr-only">Instagram</span>
-                </Link>
-                <Link href="#" className="text-black hover:text-gray-600">
-                  <Youtube size={20} />
-                  <span className="sr-only">YouTube</span>
-                </Link>
-                <Link href="#" className="text-black hover:text-gray-600">
-                  <Linkedin size={20} />
-                  <span className="sr-only">LinkedIn</span>
-                </Link>
-              </div>
+import Link from "next/link";
+import { Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
+
+export function footerzinho() {
+    const socialLinks = [
+        { href: "#", icon: Twitter, name: "Twitter" },
+        { href: "#", icon: Instagram, name: "Instagram" },
+        { href: "#", icon: Youtube, name: "YouTube" },
+        { href: "#", icon: Linkedin, name: "LinkedIn" },
+    ];
+
+    return (
+        <footer className="bg-gray-50 border-t border-gray-200">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Seção principal com logo e links essenciais */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
+                    {/* Coluna 1: Logo e Descrição */}
+                    <div className="col-span-1">
+                        <Link href="/" className="flex items-center space-x-3">
+                            <img src="./horde.png" className="h-10 w-auto" alt="Logo foodflow" />
+                            <span className="text-xl font-bold text-gray-800">
+                                foodflow
+                            </span>
+                        </Link>
+                        <p className="mt-4 text-sm text-gray-600">
+                            Sua plataforma de gestão de propostas e clientes.
+                        </p>
+                    </div>
+
+                    {/* Colunas 2 e 3: Links Essenciais */}
+                    <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-8">
+                        <div>
+                            <h3 className="font-semibold text-gray-900 mb-4">Institucional</h3>
+                            <ul className="space-y-3">
+                                <li><Link href="/sobre" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sobre Nós</Link></li>
+                                <li><Link href="/contato" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Contato</Link></li>
+                                <li><Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Blog</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-gray-900 mb-4">Suporte</h3>
+                            <ul className="space-y-3">
+                                <li><Link href="/ajuda" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Central de Ajuda</Link></li>
+                                <li><Link href="/termos" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Termos de Serviço</Link></li>
+                                <li><Link href="/privacidade" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Política de Privacidade</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Barra Inferior */}
+                <div className="flex flex-col sm:flex-row items-center **justify-center sm:justify-between** py-6 border-t border-gray-200">
+                    <p className="text-sm text-gray-500 mb-2 sm:mb-0 text-center sm:text-left">© {new Date().getFullYear()} foodflow. Todos os direitos reservados.</p>
+                    <div className="flex space-x-5">
+                        {socialLinks.map(social => (
+                            <Link key={social.name} href={social.href} className="text-gray-500 hover:text-gray-900 transition-colors">
+                                <social.icon size={20} /><span className="sr-only">{social.name}</span>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
-              <div>
-                <h3 className="font-semibold mb-4">Use cases</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      UI design
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      UX design
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Wireframing
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Diagramming
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Brainstorming
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Online whiteboard
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Team collaboration
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-4">Explore</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Design
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Prototyping
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Development features
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Design systems
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Collaboration features
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Design process
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      FigJam
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-4">Resources</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Best practices
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Colors
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Color wheel
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Support
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Developers
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="text-black hover:text-gray-600">
-                      Resource library
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    )
+        </footer>
+    );
 }
