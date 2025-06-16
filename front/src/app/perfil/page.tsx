@@ -24,12 +24,12 @@ export default function Perfil() {
   return (
     <main className="min-h-screen bg-slate-50 font-sans">
       
-      {/* Seção Superior: Perfil do Usuário */}
+     
       <section className="bg-white border-b border-slate-200">
         <div className="container mx-auto px-6 py-12 md:py-16">
           <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
             
-            {/* NOVO AVATAR DO PERFIL */}
+            
             <div className="md:col-span-1 flex justify-center">
               <div className="w-40 h-40 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
                 <span className="text-6xl font-bold text-white select-none">
@@ -38,7 +38,7 @@ export default function Perfil() {
               </div>
             </div>
 
-            {/* Informações do Perfil */}
+           
             <div className="md:col-span-2 space-y-6 text-center md:text-left">
               <div className="space-y-2">
                 <p className="font-semibold text-green-600">Diretor(a) de Operações</p>
@@ -63,7 +63,7 @@ export default function Perfil() {
 
         </div>
 
-        {/* Grid de Cards das Dispensas */}
+        
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {dispensas.map((dispensa) => (
             <div key={dispensa.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">

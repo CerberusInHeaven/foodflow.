@@ -1,21 +1,12 @@
 "use client"
-import React from 'react'
+import React, { use } from 'react'
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useClienteStore } from "@/app/context/ClienteContext"
 import { useRouter } from "next/navigation"
 import { Lock, Mail, ArrowRight } from 'lucide-react'
 
-// --- Simulação de Dependências Externas (para o Canvas) ---
-// No seu projeto, remova esta parte e use as suas importações originais.
-const useClienteStoreSimulado = () => ({
-  logaCliente: (dados: any) => console.log("Cliente logado (simulado):", dados),
-});
 
-const useRouterSimulado = () => ({
-  push: (path: string) => console.log(`Redirecionando para ${path} (simulado)`),
-});
-// --- Fim da Simulação ---
 
 
 type Inputs = {
@@ -26,10 +17,9 @@ type Inputs = {
 
 export default function Login() {
     const { register, handleSubmit } = useForm<Inputs>()    
-    
-    // Altere para as suas importações originais no seu projeto
-    const { logaCliente } = useClienteStoreSimulado()
-    const router = useRouterSimulado()
+    const {logaCliente} = useClienteStore()
+   
+    const router = useRouter()
 
     async function verificaLogin(data: Inputs) {
         // A sua lógica original permanece aqui...
@@ -60,10 +50,10 @@ export default function Login() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 font-sans">
-            {/* Container do formulário */}
+           
             <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg">
                 
-                {/* Cabeçalho */}
+              
                 <div className="text-center">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
                         Bem-vindo de volta!
@@ -73,10 +63,10 @@ export default function Login() {
                     </p>
                 </div>
 
-                {/* Formulário */}
+                
                 <form className="space-y-6" onSubmit={handleSubmit(verificaLogin)}>
                     
-                    {/* Campo de E-mail */}
+                   
                     <div className="relative">
                         <label htmlFor="email" className="sr-only">Seu e-mail</label>
                         <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
@@ -90,7 +80,7 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* Campo de Senha */}
+                   
                     <div className="relative">
                         <label htmlFor="password" className="sr-only">Senha de Acesso</label>
                         <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
@@ -104,7 +94,7 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* Opções Adicionais */}
+                   
                     <div className="flex items-center justify-between text-sm">
                         <label className="flex items-center gap-2 text-slate-600 select-none cursor-pointer hover:text-slate-800">
                             <input
@@ -120,7 +110,7 @@ export default function Login() {
                         </a>
                     </div>
 
-                    {/* Botão de Login */}
+                   
                     <button
                         type="submit"
                         className="inline-flex w-full items-center justify-center gap-2 h-12 px-6 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 transition-all shadow-lg shadow-green-500/20 hover:shadow-green-500/30 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
@@ -129,7 +119,6 @@ export default function Login() {
                         <ArrowRight className="w-5 h-5" />
                     </button>
 
-                    {/* Link para Cadastro */}
                     <p className="text-center text-sm text-slate-600">
                         Ainda não possui uma conta?{" "}
                         <a href="#" className="font-semibold text-green-600 hover:underline">

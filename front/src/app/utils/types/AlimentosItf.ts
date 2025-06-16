@@ -1,5 +1,6 @@
 export interface AlimentosItf {
-    id: string
+    perecivel: any
+    id: number
     nome: string
     peso: number
 }

@@ -1,13 +1,14 @@
 "use client"
 import { User, Search, Settings, Trash2, UserPlus } from "lucide-react";
 import ItemModal from "../components/modals/addItemmodal";
-import { useClienteStore } from "../context/ClienteContext";
 import { useEffect, useState } from "react";
 import { AlimentosItf } from "../utils/types/AlimentosItf";
 import { useParams } from "next/navigation";
 
 export default function InstanciaPage() {
     const [alimentos, setPropostas] = useState<AlimentosItf[]>([]);
+    const [alimentoSelecionado, setAlimentoSelecionado] = useState<AlimentosItf | null>(null);
+    const [showForm, setShowForm] = useState(false);
     const params = useParams();
 
     useEffect(() => {
@@ -23,19 +24,32 @@ export default function InstanciaPage() {
         buscaDados();
     }, []);
 
+    function handleCloseDetails() {
+        setAlimentoSelecionado(null);
+    }
+
+    async function handleDeleteItem(id: number) {
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/${id}`, {
+                method: 'DELETE',
+            });
+            setPropostas((prev) => prev.filter(item => item.id !== id));
+            handleCloseDetails();
+        } catch (error) {
+            console.error("Erro ao deletar alimento:", error);
+        }
+    }
+
     const funcionarios: string[] = [];
 
     return (
         <div className="min-h-screen bg-slate-100">
             <main className="max-w-7xl mx-auto px-4 py-8">
-                
                 <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80 mb-6">
                     <div className="flex flex-col gap-6">
                         <h1 className="text-3xl font-bold text-slate-800">Controle do Estoque</h1>
-                        
+
                         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                            
-                            {/* AJUSTE FEITO AQUI: A largura da barra de pesquisa foi aumentada */}
                             <div className="relative w-full md:w-1/3">
                                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <input
@@ -94,7 +108,11 @@ export default function InstanciaPage() {
                                 <tbody>
                                     {alimentos.length > 0 ? (
                                         alimentos.map((alimento) => (
-                                            <tr key={alimento.id} className="hover:bg-slate-50 transition-colors">
+                                            <tr
+                                                key={alimento.id}
+                                                onClick={() => setAlimentoSelecionado(alimento)}
+                                                className="hover:bg-slate-50 transition-colors cursor-pointer"
+                                            >
                                                 <td className="p-3 font-medium text-slate-700">{alimento.id}</td>
                                                 <td className="p-3 text-slate-600 text-center">{alimento.nome || '-'}</td>
                                                 <td className="p-3 font-medium text-slate-700 text-right">{alimento.peso}</td>
@@ -110,6 +128,46 @@ export default function InstanciaPage() {
                         </div>
                     </div>
                 </div>
+
+               
+                {alimentoSelecionado && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                        <div className="bg-white p-6 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl border border-slate-200/80">
+                            <button 
+                                onClick={handleCloseDetails}
+                                className="float-right font-bold text-slate-500 hover:text-slate-700"
+                            >
+                                ✕
+                            </button>
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">{alimentoSelecionado.nome}</h2>
+                            <p className="mb-2 text-slate-700"><strong>ID:</strong> {alimentoSelecionado.id}</p>
+                            <p className="mb-2 text-slate-700"><strong>Peso:</strong> {alimentoSelecionado.peso} kg</p>
+                            {alimentoSelecionado.perecivel && (
+                                <p className="mb-4 text-slate-700"><strong>Perecível:</strong> {alimentoSelecionado.perecivel}</p>
+                            )}
+
+                            <div className="flex gap-3 mt-4">
+                                <button
+                                    onClick={() => {
+                                        setAlimentoSelecionado(null);
+                                        setShowForm(true);
+                                    }}
+                                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-xl transition-colors"
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        if (alimentoSelecionado) handleDeleteItem(alimentoSelecionado.id);
+                                    }}
+                                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl transition-colors"
+                                >
+                                    Deletar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );
