@@ -14,7 +14,7 @@ export function footerzinho() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Seção principal com logo e links essenciais */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
-                    {/* Coluna 1: Logo e Descrição */}
+                    {/* Coluna 1 Logo e Descrição */}
                     <div className="col-span-1">
                         <Link href="/" className="flex items-center space-x-3">
                             <img src="./horde.png" className="h-10 w-auto" alt="Logo foodflow" />
@@ -27,28 +27,20 @@ export function footerzinho() {
                         </p>
                     </div>
 
-                    {/* Colunas 2 e 3: Links Essenciais */}
+                    {/* Coluna do footer 2 */}
                     <div className="col-span-1 md:col-span-2 grid grid-cols-2 gap-8">
                         <div>
-                            <h3 className="font-semibold text-gray-900 mb-4">Institucional</h3>
+                            <h3 className="font-semibold text-gray-900 mb-4">Desenvolvido por</h3>
                             <ul className="space-y-3">
-                                <li><Link href="/sobre" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sobre Nós</Link></li>
-                                <li><Link href="/contato" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Contato</Link></li>
-                                <li><Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Blog</Link></li>
+                                <li><img src="" alt="" /><Link href="/sobre" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sobre Nós</Link></li>
+                            
                             </ul>
                         </div>
-                        <div>
-                            <h3 className="font-semibold text-gray-900 mb-4">Suporte</h3>
-                            <ul className="space-y-3">
-                                <li><Link href="/ajuda" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Central de Ajuda</Link></li>
-                                <li><Link href="/termos" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Termos de Serviço</Link></li>
-                                <li><Link href="/privacidade" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Política de Privacidade</Link></li>
-                            </ul>
-                        </div>
+                        
                     </div>
                 </div>
 
-                {/* Barra Inferior */}
+               
                 <div className="flex flex-col sm:flex-row items-center **justify-center sm:justify-between** py-6 border-t border-gray-200">
                     <p className="text-sm text-gray-500 mb-2 sm:mb-0 text-center sm:text-left">© {new Date().getFullYear()} foodflow. Todos os direitos reservados.</p>
                     <div className="flex space-x-5">

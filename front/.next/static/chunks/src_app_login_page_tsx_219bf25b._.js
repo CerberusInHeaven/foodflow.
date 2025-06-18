@@ -247,13 +247,13 @@ function Login() {
                                     children: "Cadastre-se"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/login/page.tsx",
-                                    lineNumber: 125,
+                                    lineNumber: 124,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/login/page.tsx",
-                            lineNumber: 123,
+                            lineNumber: 122,
                             columnNumber: 21
                         }, this)
                     ]

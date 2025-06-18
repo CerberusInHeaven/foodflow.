@@ -11,9 +11,9 @@ export function Header() {
     const router = useRouter();
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    // Sua função de logout original
+    
     function clienteSair() {
-        if (confirm("Confirma saída do sistema?")) {
+        if (confirm("Confirma saída da conta ?")) {
             deslogaCliente();
             if (localStorage.getItem("clienteKey")) {
                 localStorage.removeItem("clienteKey");
@@ -29,9 +29,9 @@ export function Header() {
             <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     
-                    {/* Lado Esquerdo: Logo */}
+                  
                     <div className="flex-shrink-0">
-                        <Link href={isLoggedIn ? "/dispensas" : "/"} className="flex items-center gap-3">
+                        <Link href={isLoggedIn ? "/dispensa" : "/"} className="flex items-center gap-3">
                             <Image
                                 src="/horde.png"
                                 alt="FoodFlow Logo"
@@ -46,10 +46,10 @@ export function Header() {
                         </Link>
                     </div>
 
-                    {/* Lado Direito: Ações */}
+                    
                     <div className="flex items-center gap-4">
                         {isLoggedIn ? (
-                            // --- HEADER DE USUÁRIO LOGADO ---
+                            // --- logaduuuuu ---
                             <div className="relative">
                                 <button 
                                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -62,7 +62,7 @@ export function Header() {
                                     <ChevronDown className="w-5 h-5 text-gray-400" />
                                 </button>
 
-                                {/* Dropdown do Menu do Usuário */}
+                               
                                 {isUserMenuOpen && (
                                     <div 
                                         className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5"
@@ -76,8 +76,8 @@ export function Header() {
                                             <Link href="/perfil" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100">
                                                 <Settings className="w-4 h-4 text-gray-500" /> Meu Perfil
                                             </Link>
-                                             <Link href="/dispensas" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100">
-                                                {/* Adicione um ícone se desejar. Ex: <List className="w-4 h-4 text-gray-500" /> */}
+                                             <Link href="/dispensa" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100">
+                                                
                                                 Minhas Dispensas
                                             </Link>
                                             <button onClick={clienteSair} className="w-full text-left flex items-center gap-3 px-3 py-2 text-sm text-red-600 rounded-md hover:bg-red-50 hover:text-red-700">
@@ -88,7 +88,7 @@ export function Header() {
                                 )}
                             </div>
                         ) : (
-                            // --- HEADER DE VISITANTE ---
+                            // --- não ta logaduuuu ---
                             <div className="flex items-center gap-2">
                                 <Link href="/login" className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-colors">
                                     Entrar

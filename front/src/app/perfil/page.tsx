@@ -19,6 +19,7 @@ export default function Perfil() {
     { id: 1, nome: 'Cozinha Principal', data: 'Atualizado em 12 de Jun' },
     { id: 2, nome: 'Estoque do Fim de Semana', data: 'Atualizado em 10 de Jun' },
     { id: 3, nome: 'Dispensa de Emergência', data: 'Atualizado em 5 de Jun' },
+    { id: 4, nome: 'Dispensa de Emergência', data: 'Atualizado em 5 de Jun' },
   ]
 
   return (
