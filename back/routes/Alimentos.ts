@@ -8,7 +8,8 @@ const prisma = new PrismaClient()
 const router = Router()
 
 const alimentoSchema = z.object({
-nome: z.string().min(2,
+  id  : z.number().optional(),
+  nome: z.string().min(2,
     { message: "artefato deve possuir, no mínimo, 2 caracteres" }),
 peso: z.number(),
 perecivel: z.nativeEnum(Pereciveis).optional(),
@@ -27,6 +28,9 @@ router.get("/", async (req, res) => {
   }
 })
 
+
+
+
 router.get("/dispensa/:dispensaId/alimentos", async (req, res) => {
   const { dispensaId } = req.params;
 
@@ -39,6 +43,21 @@ router.get("/dispensa/:dispensaId/alimentos", async (req, res) => {
     res.status(200).json(alimentos);
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar alimentos da dispensa" });
+  }
+});
+
+router.get("/dispensa/:dispensaId/alimentos/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const alimento = await prisma.alimentos.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(200).json(alimento);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar alimento" });
   }
 });
 
