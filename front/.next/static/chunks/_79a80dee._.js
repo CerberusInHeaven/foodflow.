@@ -83,7 +83,7 @@ function ClientModal() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                 className: "px-4 py-2 bg-[#2c2c2c] text-[#ffffff] rounded-md hover:bg-[#1e1e1e] font-medium",
                 onClick: ()=>setIsOpen(true),
-                children: "Criar sua Instancia"
+                children: "Criar sua Dispensa"
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/clientModal.tsx",
                 lineNumber: 15,
@@ -97,7 +97,7 @@ function ClientModal() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                 className: "block text-sm font-medium text-gray-700",
-                                children: "Nome do alimento"
+                                children: "Nome da dispensa"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/modals/clientModal.tsx",
                                 lineNumber: 18,
@@ -108,21 +108,6 @@ function ClientModal() {
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/modals/clientModal.tsx",
                                 lineNumber: 21,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                className: "block text-sm font-medium text-gray-700",
-                                children: "Qtd\\Kg"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/components/modals/clientModal.tsx",
-                                lineNumber: 24,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/components/modals/clientModal.tsx",
-                                lineNumber: 27,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -137,7 +122,7 @@ function ClientModal() {
                         children: "Enviar item"
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/modals/clientModal.tsx",
-                        lineNumber: 32,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this)
                 ]
