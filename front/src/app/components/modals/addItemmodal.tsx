@@ -12,19 +12,21 @@ type inputs = {
   peso: number;
 };
 
-export default function ItemModal() {
+export default function ItemModal({ dispensaId }: { dispensaId: number }) {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm<AlimentosItf>();
-  const router = useRouter()
+  const router = useRouter();
+
   async function tryinput(data: inputs) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/dispensa/${dispensaId}/alimentos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nome: data.nome,
           peso: Number(data.peso),
           perecivel: "SIM",
+          dispensaId: dispensaId,
         }),
       });
 
@@ -39,14 +41,13 @@ export default function ItemModal() {
         }
       } else {
         console.log("Item enviado com sucesso!");
-        setIsOpen(false); // Fecha o modal após sucesso
-        router.refresh()
-        toast.success("Item enviado com sucesso!")
+        setIsOpen(false);
+        router.refresh();
+        toast.success("Item enviado com sucesso!");
       }
     } catch (error) {
       console.error("Erro de rede ou outra falha:", error);
     }
-    
   }
 
   return (

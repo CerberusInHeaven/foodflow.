@@ -11,8 +11,8 @@ const alimentoSchema = z.object({
 nome: z.string().min(2,
     { message: "artefato deve possuir, no mínimo, 2 caracteres" }),
 peso: z.number(),
-perecivel: z.nativeEnum(Pereciveis).optional()
-
+perecivel: z.nativeEnum(Pereciveis).optional(),
+dispensaId: z.number()
  
 })
 
@@ -42,7 +42,7 @@ router.get("/dispensa/:dispensaId/alimentos", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/dispensa/:dispensaId/alimentos", async (req, res) => {
 
   const valida = alimentoSchema.safeParse(req.body)
   if (!valida.success) {
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const { nome, peso, perecivel = 'NÃO',} = valida.data
+  const { nome, peso, perecivel = 'NÃO', dispensaId} = valida.data
 
 try {
   const carro = await prisma.alimentos.create({
@@ -60,7 +60,7 @@ try {
       perecivel,
       dispensa: { // add this property
         connect: {
-          id: 1, // replace with the actual dispensa id
+          id: dispensaId, // replace with the actual dispensa id
         },
       },
     },
