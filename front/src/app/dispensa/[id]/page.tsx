@@ -1,6 +1,7 @@
 "use client"
 import { User, Search, Settings, Trash2, UserPlus } from "lucide-react";
 import ItemModal from "../../components/modals/addItemmodal";
+import EditItemModal from "@/app/components/modals/editItemmodal";
 import { useEffect, useState } from "react";
 import { AlimentosItf } from "../../utils/types/AlimentosItf";
 import { useParams } from "next/navigation";
@@ -151,15 +152,7 @@ useEffect(() => {
                             )}
 
                             <div className="flex gap-3 mt-4">
-                                <button
-                                    onClick={() => {
-                                        setAlimentoSelecionado(null);
-                                        setShowForm(true);
-                                    }}
-                                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-xl transition-colors"
-                                >
-                                    Editar
-                                </button>
+                                <EditItemModal id={Number(alimentoSelecionado?.id)}/>
                                 <button
                                     onClick={() => {
                                         if (alimentoSelecionado) handleDeleteItem(alimentoSelecionado.id);

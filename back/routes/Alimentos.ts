@@ -90,7 +90,7 @@ try {
 }
 })
 
-router.patch("/:id", async (req, res) => {
+router.patch(":id", async (req, res) => {
   const { id } = req.params
 
   const valida = alimentoSchema.safeParse(req.body)
