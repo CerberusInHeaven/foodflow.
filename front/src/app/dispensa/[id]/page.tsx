@@ -5,6 +5,7 @@ import EditItemModal from "@/app/components/modals/editItemmodal";
 import { useEffect, useState } from "react";
 import { AlimentosItf } from "../../utils/types/AlimentosItf";
 import { useParams } from "next/navigation";
+import UserModal from "@/app/components/modals/userModal";
 
 export default function InstanciaPage() {
     const [alimentos, setPropostas] = useState<AlimentosItf[]>([]);
@@ -72,9 +73,7 @@ useEffect(() => {
                                 <button className="bg-slate-200 text-slate-700 hover:bg-slate-300 flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors">
                                     <Settings size={16} /> Config.
                                 </button>
-                                <button className="bg-slate-200 text-slate-700 hover:bg-slate-300 flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors">
-                                    <UserPlus size={16} /> Funcionário
-                                </button>
+                                <UserModal id={""} nome={""} email={""} />
                             </div>
                         </div>
                     </div>
