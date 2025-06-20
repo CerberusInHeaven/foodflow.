@@ -32,7 +32,7 @@ export function footerzinho() {
                         <div>
                             <h3 className="font-semibold text-gray-900 mb-4">Desenvolvido por</h3>
                             <ul className="space-y-3">
-                                <li><img src="" alt="" /><Link href="/sobre" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sobre Nós</Link></li>
+                                <li><Link href="/sobre" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Sobre Nós</Link></li>
                             
                             </ul>
                         </div>

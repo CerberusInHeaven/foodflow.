@@ -16,13 +16,11 @@ datasource db {
 model Dispensa {
   id             Int          @id @default(autoincrement())
   nome           String       @db.VarChar(100)
-  quantidade     Int          @db.SmallInt
-  peso           Decimal      @db.Decimal(10, 2)
-  perecivel      Pereciveis @default(NÃO)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt()
-  destaque       Boolean      @default(true)
-  usuarios      Usuario[]
+  usuario        Usuario      @relation(fields: [usuarioID], references: [id])
+  usuarioID String            @db.VarChar(36)
+  alimentos Alimentos[]
   @@map("Dispensa")
 }
 
@@ -30,10 +28,11 @@ model Alimentos {
   id             Int          @id @default(autoincrement())
   nome           String       @db.VarChar(100)
   peso           Decimal      @db.Decimal(10, 2)
-  perecivel      Pereciveis @default(NÃO)
+  perecivel      Pereciveis   @default(NÃO)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt()
-  destaque       Boolean      @default(true)
+  dispensa       Dispensa   @relation(fields: [dispensaId], references: [id])
+  dispensaId     Int
   propostas      Proposta[]
   @@map("Alimento")
 }
@@ -51,19 +50,19 @@ model Usuario {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt  
   propostas     Proposta[]
-  dispensa Dispensa[]
+  dispensa      Dispensa[]
   @@map("clientes")
 }
 
 model Proposta {
-  id          Int       @id @default(autoincrement())
-  cliente     Usuario   @relation(fields: [usuarioId], references: [id])
-  usuarioId   String    @db.VarChar(36)
+  id                 Int       @id @default(autoincrement())
+  cliente            Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId          String    @db.VarChar(36)
   alimentos          Alimentos        @relation(fields: [alimentoId], references: [id])
-  alimentoId        Int
-  descricao   String    @db.VarChar(255)
-  resposta    String?   @db.VarChar(255)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt  
+  alimentoId         Int
+  descricao          String    @db.VarChar(255)
+  resposta           String?   @db.VarChar(255)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt  
   @@map("propostas")
 }

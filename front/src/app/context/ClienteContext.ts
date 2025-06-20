@@ -1,5 +1,7 @@
+// context/ClienteContext.ts
 import { ClienteItf } from '../utils/types/ClienteItf'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 type ClienteStore = {
     cliente: ClienteItf
@@ -7,8 +9,15 @@ type ClienteStore = {
     deslogaCliente: () => void
 }
 
-export const useClienteStore = create<ClienteStore>((set) => ({
-    cliente: {} as ClienteItf,
-    logaCliente: (clienteLogado) => set({cliente: clienteLogado}),
-    deslogaCliente: () => set({cliente: {} as ClienteItf})
-}))
+export const useClienteStore = create<ClienteStore>()(
+    persist(
+        (set) => ({
+            cliente: {} as ClienteItf,
+            logaCliente: (clienteLogado) => set({ cliente: clienteLogado }),
+            deslogaCliente: () => set({ cliente: {} as ClienteItf })
+        }),
+        {
+            name: 'cliente-storage', // nome da chave no localStorage
+        }
+    )
+)

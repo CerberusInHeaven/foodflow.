@@ -3,32 +3,7 @@ import { Router } from 'express'
 import { z } from 'zod'
 
 const prisma = new PrismaClient()
-// const prisma = new PrismaClient({
-//   log: [
-//     {
-//       emit: 'event',
-//       level: 'query',
-//     },
-//     {
-//       emit: 'stdout',
-//       level: 'error',
-//     },
-//     {
-//       emit: 'stdout',
-//       level: 'info',
-//     },
-//     {
-//       emit: 'stdout',
-//       level: 'warn',
-//     },
-//   ],
-// })
 
-// prisma.$on('query', (e) => {
-//   console.log('Query: ' + e.query)
-//   console.log('Params: ' + e.params)
-//   console.log('Duration: ' + e.duration + 'ms')
-// })
 
 const router = Router()
 
@@ -52,6 +27,21 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.get("/dispensa/:dispensaId/alimentos", async (req, res) => {
+  const { dispensaId } = req.params;
+
+  try {
+    const alimentos = await prisma.alimentos.findMany({
+      where: {
+        dispensaId: Number(dispensaId),
+      },
+    });
+    res.status(200).json(alimentos);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar alimentos da dispensa" });
+  }
+});
+
 router.post("/", async (req, res) => {
 
   const valida = alimentoSchema.safeParse(req.body)
@@ -60,18 +50,25 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const { nome, peso, perecivel = 'SIM',} = valida.data
+  const { nome, peso, perecivel = 'NÃO',} = valida.data
 
-  try {
-    const carro = await prisma.alimentos.create({
-      data: {
-        nome, peso, perecivel
-      }
-    })
-    res.status(201).json(carro)
-  } catch (error) {
-    res.status(400).json({ error })
-  }
+try {
+  const carro = await prisma.alimentos.create({
+    data: {
+      nome, 
+      peso, 
+      perecivel,
+      dispensa: { // add this property
+        connect: {
+          id: 1, // replace with the actual dispensa id
+        },
+      },
+    },
+  })
+  res.status(201).json(carro)
+} catch (error) {
+  res.status(400).json({ error })
+}
 })
 
 router.delete("/:id", async (req, res) => {

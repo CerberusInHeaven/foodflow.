@@ -117,6 +117,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+
 // Rota para alterar um cliente existente
 router.put("/:id", async (req, res) => {
   const { id } = req.params

@@ -31,7 +31,7 @@ export function Header() {
                     
                   
                     <div className="flex-shrink-0">
-                        <Link href={isLoggedIn ? "/dispensa" : "/"} className="flex items-center gap-3">
+                        <Link href={isLoggedIn ? "/" : "/"} className="flex items-center gap-3">
                             <Image
                                 src="/horde.png"
                                 alt="FoodFlow Logo"

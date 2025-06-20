@@ -6,7 +6,7 @@ import { useClienteStore } from "@/app/context/ClienteContext"
 import { useRouter } from "next/navigation"
 import { Lock, Mail, User, ArrowRight } from 'lucide-react'
 
-// Define o tipo para os dados do formulário de registro
+
 type Inputs = {
     nome: string
     email: string
@@ -17,18 +17,15 @@ export default function Registro() {
     const { register, handleSubmit } = useForm<Inputs>()    
     const router = useRouter()
 
-    // Função para lidar com a criação da conta
+    
     async function criaConta(data: Inputs) {
-        // Sua lógica original para enviar os dados para a API
-        const response = await 
+          const response = await 
           fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes`, {
             headers: {"Content-Type": "application/json"},
             method: "POST",
             body: JSON.stringify({ nome: data.nome, email: data.email, senha: data.senha })
           })
-        
-        // Status 201 (Created) é o mais comum para novos registros
-        if (response.status == 201 || response.status == 200) {
+         if (response.status == 201 || response.status == 200) {
             toast.success("Conta criada com sucesso! Por favor, faça o login.")
             router.push("/login") // Redireciona para a página de login
         } else {
@@ -38,11 +35,10 @@ export default function Registro() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 font-sans">
-            {/* Container do formulário */}
+           
             <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-lg">
                 
-                {/* Cabeçalho */}
-                <div className="text-center">
+              <div className="text-center">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
                         Crie sua Conta
                     </h1>
@@ -51,10 +47,10 @@ export default function Registro() {
                     </p>
                 </div>
 
-                {/* Formulário */}
+                {/* FORM COMEÇA AQUI, FUNCIONA PLMDSS */}
                 <form className="space-y-6" onSubmit={handleSubmit(criaConta)}>
                     
-                    {/* Campo de Nome */}
+                    {/* NOMINHO */}
                     <div className="relative">
                         <label htmlFor="nome" className="sr-only">Seu nome</label>
                         <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
@@ -68,7 +64,7 @@ export default function Registro() {
                         />
                     </div>
 
-                    {/* Campo de E-mail */}
+                    {/* EMAILZINHO */}
                     <div className="relative">
                         <label htmlFor="email" className="sr-only">Seu e-mail</label>
                         <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
@@ -82,7 +78,7 @@ export default function Registro() {
                         />
                     </div>
 
-                    {/* Campo de Senha */}
+                    {/* SENHAZINHA */}
                     <div className="relative">
                         <label htmlFor="password" className="sr-only">Crie uma Senha</label>
                         <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
@@ -96,7 +92,7 @@ export default function Registro() {
                         />
                     </div>
 
-                    {/* Botão de Registro */}
+                    {/* REGISTRA ESSA BAGAÇA*/}
                     <button
                         type="submit"
                         className="inline-flex w-full items-center justify-center gap-2 h-12 px-6 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 transition-all shadow-lg shadow-green-500/20 hover:shadow-green-500/30 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
@@ -105,7 +101,7 @@ export default function Registro() {
                         <ArrowRight className="w-5 h-5" />
                     </button>
 
-                    {/* Link para Login */}
+                    {/* JA POSSUI UMA CONTA */}
                     <p className="text-center text-sm text-slate-600">
                         Já possui uma conta?{" "}
                         <a href="/login" className="font-semibold text-green-600 hover:underline">

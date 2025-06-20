@@ -1,8 +1,8 @@
 "use client"
 import { User, Search, Settings, Trash2, UserPlus } from "lucide-react";
-import ItemModal from "../components/modals/addItemmodal";
+import ItemModal from "../../components/modals/addItemmodal";
 import { useEffect, useState } from "react";
-import { AlimentosItf } from "../utils/types/AlimentosItf";
+import { AlimentosItf } from "../../utils/types/AlimentosItf";
 import { useParams } from "next/navigation";
 
 export default function InstanciaPage() {
@@ -10,19 +10,23 @@ export default function InstanciaPage() {
     const [alimentoSelecionado, setAlimentoSelecionado] = useState<AlimentosItf | null>(null);
     const [showForm, setShowForm] = useState(false);
     const params = useParams();
+    const dispensaId = params?.id; // o 'id' vem da URL /dispensa/[id]
 
-    useEffect(() => {
-        async function buscaDados() {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos`);
-                const dados = await response.json();
-                setPropostas(dados);
-            } catch (error) {
-                console.error("Falha ao buscar dados da API:", error);
-            }
-        }
-        buscaDados();
-    }, []);
+useEffect(() => {
+  async function buscaDados() {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/dispensa/${dispensaId}/alimentos`);
+      const dados = await response.json();
+      setPropostas(dados);
+    } catch (error) {
+      console.error("Falha ao buscar dados da API:", error);
+    }
+  }
+
+  if (dispensaId) {
+    buscaDados();
+  }
+}, [dispensaId]);
 
     function handleCloseDetails() {
         setAlimentoSelecionado(null);

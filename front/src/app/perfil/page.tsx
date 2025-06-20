@@ -1,36 +1,36 @@
 "use client"
-import React from 'react'
-import { Plus, MessageSquareQuote, User } from "lucide-react"
+import React, { useState, useEffect } from 'react'
 import { useClienteStore } from "../context/ClienteContext"
 import ClientModal from "../components/modals/clientModal"
+import { DispensaItf } from '../utils/types/DispensaItf'
 
-// Componente da Página de Perfil
 export default function Perfil() {
   const { cliente } = useClienteStore()
+  const [dispensas, setDispensas] = useState<DispensaItf[]>([])
+  const id = cliente.id
 
-  // Função para pegar a primeira letra do nome para o avatar
   const getInitial = (name: string | undefined): string => {
-    if (!name) return 'U' // 'U' de Usuário como fallback
-    return name.charAt(0).toUpperCase()
+    return name?.charAt(0).toUpperCase() || 'U'
   }
 
-  // Dados mocados para os cards da dispensa (mantidos do seu código)
-  const dispensas = [
-    { id: 1, nome: 'Cozinha Principal', data: 'Atualizado em 12 de Jun' },
-    { id: 2, nome: 'Estoque do Fim de Semana', data: 'Atualizado em 10 de Jun' },
-    { id: 3, nome: 'Dispensa de Emergência', data: 'Atualizado em 5 de Jun' },
-    { id: 4, nome: 'Dispensa de Emergência', data: 'Atualizado em 5 de Jun' },
-  ]
+  useEffect(() => {
+    const carregarDispensas = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/cliente/${id}`);
+        const data = await response.json();
+        setDispensas(data);
+      } catch (error) {
+        console.error("Erro ao carregar dispensas:", error);
+      }
+    };
+    if (id) carregarDispensas();
+  }, [id]);
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans">
-      
-     
       <section className="bg-white border-b border-slate-200">
         <div className="container mx-auto px-6 py-12 md:py-16">
           <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-center">
-            
-            
             <div className="md:col-span-1 flex justify-center">
               <div className="w-40 h-40 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
                 <span className="text-6xl font-bold text-white select-none">
@@ -38,8 +38,6 @@ export default function Perfil() {
                 </span>
               </div>
             </div>
-
-           
             <div className="md:col-span-2 space-y-6 text-center md:text-left">
               <div className="space-y-2">
                 <p className="font-semibold text-green-600">Diretor(a) de Operações</p>
@@ -52,34 +50,37 @@ export default function Perfil() {
         </div>
       </section>
 
-      {/* Seção Inferior: Dispensas */}
+      {/* AS DISPENSAS RENDERIZAM AQUIIIIIIIIIIIIIII */}
       <section className="container mx-auto px-6 py-12 md:py-16">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Suas Dispensas</h2>
-          
-          {/* O seu modal continua aqui, sem alterações na chamada */}
           <div>
             <ClientModal />
           </div>
-
         </div>
 
-        
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {dispensas.map((dispensa) => (
             <div key={dispensa.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
               <div className="flex-grow">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{dispensa.nome}</h3>
-                <p className="text-slate-500 text-sm">{dispensa.data}</p>
+                <p className="text-slate-500 text-sm">
+                  {dispensa.createdAt 
+                    ? new Date(dispensa.createdAt).toLocaleDateString('pt-BR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                      }) 
+                    : 'Sem data'}
+                </p>
               </div>
-              <a href="#" className="mt-6 inline-block text-green-600 font-semibold hover:underline self-start">
+              <a href={`/dispensa/${dispensa.id}`} className="mt-6 inline-block text-green-600 font-semibold hover:underline self-start">
                 Ver detalhes →
               </a>
             </div>
           ))}
         </div>
       </section>
-
     </main>
   )
 }

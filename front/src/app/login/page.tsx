@@ -6,9 +6,6 @@ import { useClienteStore } from "@/app/context/ClienteContext"
 import { useRouter } from "next/navigation"
 import { Lock, Mail, ArrowRight } from 'lucide-react'
 
-
-
-
 type Inputs = {
     email: string
     senha: string
@@ -22,7 +19,7 @@ export default function Login() {
     const router = useRouter()
 
     async function verificaLogin(data: Inputs) {
-        // A sua lógica original permanece aqui...
+        
         const response = await 
           fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes/login`, {
             headers: {"Content-Type": "application/json"},
