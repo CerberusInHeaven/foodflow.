@@ -71,6 +71,26 @@ try {
 }
 })
 
+router.patch("/:id", async (req, res) => {
+  const { id } = req.params
+
+  const valida = alimentoSchema.safeParse(req.body)
+  if (!valida.success) {
+    res.status(400).json({ erro: valida.error })
+    return
+  }
+
+  try {
+    const carro = await prisma.alimentos.update({
+      where: { id: Number(id) },
+      data: valida.data
+    })
+    res.status(200).json(carro)
+  } catch (error) {
+    res.status(400).json({ erro: error })
+  }
+})
+
 router.delete("/:id", async (req, res) => {
   const { id } = req.params
 
