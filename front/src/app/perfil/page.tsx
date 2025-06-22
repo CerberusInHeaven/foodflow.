@@ -55,7 +55,7 @@ export default function Perfil() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Suas Dispensas</h2>
           <div>
-            <ClientModal />
+            <ClientModal usuarioID={id} />
           </div>
         </div>
 

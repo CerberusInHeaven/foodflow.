@@ -33,8 +33,7 @@ model Alimentos {
   updatedAt      DateTime     @updatedAt()
   dispensa       Dispensa   @relation(fields: [dispensaId], references: [id])
   dispensaId     Int
-  propostas      Proposta[]
-  @@map("Alimento")
+ @@map("Alimento")
 }
 
 enum Pereciveis {
@@ -49,20 +48,7 @@ model Usuario {
   senha         String   @db.VarChar(60)   
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt  
-  propostas     Proposta[]
   dispensa      Dispensa[]
   @@map("clientes")
 }
 
-model Proposta {
-  id                 Int       @id @default(autoincrement())
-  cliente            Usuario   @relation(fields: [usuarioId], references: [id])
-  usuarioId          String    @db.VarChar(36)
-  alimentos          Alimentos        @relation(fields: [alimentoId], references: [id])
-  alimentoId         Int
-  descricao          String    @db.VarChar(255)
-  resposta           String?   @db.VarChar(255)
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt  
-  @@map("propostas")
-}
