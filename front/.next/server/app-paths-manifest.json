@@ -1,3 +1,5 @@
 {
-  "/dispensa/[id]/page": "app/dispensa/[id]/page.js"
+  "/dispensa/[id]/page": "app/dispensa/[id]/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/perfil/page": "app/perfil/page.js"
 }

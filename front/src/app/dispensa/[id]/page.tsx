@@ -67,9 +67,6 @@ useEffect(() => {
 
                             <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 w-full sm:w-auto">
                                 <ItemModal dispensaId={Number(dispensaId)} />
-                                <button className="bg-red-100 text-red-700 hover:bg-red-200 flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors">
-                                    <Trash2 size={16} /> Remover Item
-                                </button>
                                 <button className="bg-slate-200 text-slate-700 hover:bg-slate-300 flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors">
                                     <Settings size={16} /> Config.
                                 </button>

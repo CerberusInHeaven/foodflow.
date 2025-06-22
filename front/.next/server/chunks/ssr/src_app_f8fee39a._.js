@@ -208,23 +208,21 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$di
 ;
 ;
 ;
-function EditItemModal({ id }) {
+function EditItemModal({ id, dispensaId }) {
     const [isOpen, setIsOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const { register, handleSubmit } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$hook$2d$form$2f$dist$2f$index$2e$esm$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useForm"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     async function tryinput(data) {
         console.log("Dados recebidos:", data);
         try {
-            const response = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/alimentos/${id}`, {
+            const response = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/alimentos/dispensa/${dispensaId}/alimentos/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     nome: data.nome,
-                    peso: Number(data.peso),
-                    perecivel: "SIM",
-                    id: id
+                    peso: Number(data.peso)
                 })
             });
             if (!response.ok) {
@@ -254,7 +252,7 @@ function EditItemModal({ id }) {
                 children: "Editar"
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                lineNumber: 56,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -268,7 +266,7 @@ function EditItemModal({ id }) {
                             children: "Nome do alimento"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                            lineNumber: 64,
+                            lineNumber: 63,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -278,7 +276,7 @@ function EditItemModal({ id }) {
                             ...register("nome")
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                            lineNumber: 67,
+                            lineNumber: 66,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -286,7 +284,7 @@ function EditItemModal({ id }) {
                             children: "Qtd\\Kg"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                            lineNumber: 73,
+                            lineNumber: 72,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -298,7 +296,7 @@ function EditItemModal({ id }) {
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                            lineNumber: 76,
+                            lineNumber: 75,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -307,18 +305,18 @@ function EditItemModal({ id }) {
                             children: "Salvar"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                            lineNumber: 82,
+                            lineNumber: 81,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                    lineNumber: 63,
+                    lineNumber: 62,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/editItemmodal.tsx",
-                lineNumber: 62,
+                lineNumber: 61,
                 columnNumber: 7
             }, this)
         ]
@@ -347,11 +345,12 @@ function UserModal(cliente) {
         return name?.charAt(0).toUpperCase() || 'U';
     };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/clientes/${cliente.id}`).then((res)=>res.json()).then((data)=>setClientes(data));
-    }, []);
-    const onSubmit = (data)=>{
-        console.log(data);
-    };
+        fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/clientes/${cliente.id}`).then((res)=>res.json()).then((data)=>setClientes(Array.isArray(data) ? data : [
+                data
+            ]));
+    }, [
+        cliente.id
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -360,117 +359,79 @@ function UserModal(cliente) {
                 children: "Criar sua Dispensa"
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/userModal.tsx",
-                lineNumber: 30,
-                columnNumber: 13
+                lineNumber: 23,
+                columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$modal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 isOpen: isOpen,
                 onClose: ()=>setIsOpen(false),
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex flex-col gap-6 mb-6",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                    className: "container mx-auto px-6 py-12 md:py-16",
                     children: [
-                        clientes.map((cliente)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "md:col-span-1 flex",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "w-40 h-40 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30",
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-col sm:flex-row items-center justify-between gap-4 mb-8",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                className: "text-3xl font-bold text-gray-900",
+                                children: "Perfil do Usuário"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/components/modals/userModal.tsx",
+                                lineNumber: 33,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/components/modals/userModal.tsx",
+                            lineNumber: 32,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6",
+                            children: clientes.map((cliente)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "w-32 h-32 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 mb-4",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-6xl font-bold text-white select-none",
+                                                className: "text-5xl font-bold text-white select-none",
                                                 children: getInitial(cliente?.nome)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                                lineNumber: 37,
-                                                columnNumber: 33
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                            lineNumber: 36,
-                                            columnNumber: 29
-                                        }, this)
-                                    }, cliente?.id, false, {
-                                        fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                        lineNumber: 35,
-                                        columnNumber: 27
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "md:col-span-3 space-y-6 text-center md:text-left",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "space-y-2",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                                className: "text-4xl lg:text-5xl font-bold text-gray-900 leading-tight",
-                                                children: cliente?.nome || 'Nome do Usuário'
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/components/modals/userModal.tsx",
                                                 lineNumber: 43,
-                                                columnNumber: 37
+                                                columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/modals/userModal.tsx",
                                             lineNumber: 42,
-                                            columnNumber: 33
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                            className: "text-lg font-bold text-gray-900 mb-1",
+                                            children: cliente?.nome || 'Nome do Usuário'
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/components/modals/userModal.tsx",
+                                            lineNumber: 47,
+                                            columnNumber: 17
                                         }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                        lineNumber: 41,
-                                        columnNumber: 31
-                                    }, this)
-                                ]
-                            }, void 0, true)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "md:col-span-1 flex",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "w-40 h-40 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-6xl font-bold text-white select-none",
-                                    children: getInitial(cliente?.id)
-                                }, void 0, false, {
+                                    ]
+                                }, cliente.id, true, {
                                     fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                    lineNumber: 52,
-                                    columnNumber: 29
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                lineNumber: 51,
-                                columnNumber: 25
-                            }, this)
+                                    lineNumber: 38,
+                                    columnNumber: 15
+                                }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/modals/userModal.tsx",
-                            lineNumber: 50,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "md:col-span-3 space-y-6 text-center md:text-left",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "space-y-2",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    className: "text-4xl lg:text-5xl font-bold text-gray-900 leading-tight",
-                                    children: cliente?.id || 'Nome do Usuário'
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                    lineNumber: 59,
-                                    columnNumber: 29
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/components/modals/userModal.tsx",
-                                lineNumber: 58,
-                                columnNumber: 25
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/components/modals/userModal.tsx",
-                            lineNumber: 57,
-                            columnNumber: 21
+                            lineNumber: 36,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/components/modals/userModal.tsx",
-                    lineNumber: 33,
-                    columnNumber: 17
+                    lineNumber: 31,
+                    columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/modals/userModal.tsx",
-                lineNumber: 31,
-                columnNumber: 13
+                lineNumber: 30,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true);
@@ -488,7 +449,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-ssr] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-ssr] (ecmascript) <export default as Search>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/settings.js [app-ssr] (ecmascript) <export default as Settings>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-ssr] (ecmascript) <export default as Trash2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$addItemmodal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/components/modals/addItemmodal.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$editItemmodal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/components/modals/editItemmodal.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
@@ -597,37 +557,20 @@ function InstanciaPage() {
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                className: "bg-red-100 text-red-700 hover:bg-red-200 flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
-                                                        size: 16
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                        lineNumber: 71,
-                                                        columnNumber: 37
-                                                    }, this),
-                                                    " Remover Item"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                lineNumber: 70,
-                                                columnNumber: 33
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 className: "bg-slate-200 text-slate-700 hover:bg-slate-300 flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__["Settings"], {
                                                         size: 16
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                        lineNumber: 74,
+                                                        lineNumber: 71,
                                                         columnNumber: 37
                                                     }, this),
                                                     " Config."
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                lineNumber: 73,
+                                                lineNumber: 70,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$userModal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -636,7 +579,7 @@ function InstanciaPage() {
                                                 email: ""
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                lineNumber: 76,
+                                                lineNumber: 73,
                                                 columnNumber: 33
                                             }, this)
                                         ]
@@ -673,7 +616,7 @@ function InstanciaPage() {
                                     children: "Funcionários"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                    lineNumber: 84,
+                                    lineNumber: 81,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -687,12 +630,12 @@ function InstanciaPage() {
                                                         className: "w-5 h-5 text-slate-500"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                        lineNumber: 90,
+                                                        lineNumber: 87,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                    lineNumber: 89,
+                                                    lineNumber: 86,
                                                     columnNumber: 41
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -700,31 +643,31 @@ function InstanciaPage() {
                                                     children: cook
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                    lineNumber: 92,
+                                                    lineNumber: 89,
                                                     columnNumber: 41
                                                 }, this)
                                             ]
                                         }, index, true, {
                                             fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                            lineNumber: 88,
+                                            lineNumber: 85,
                                             columnNumber: 37
                                         }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-sm text-slate-500 text-center py-4",
                                         children: "Nenhum funcionário cadastrado."
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 96,
+                                        lineNumber: 93,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 82,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                            lineNumber: 83,
+                            lineNumber: 80,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -735,7 +678,7 @@ function InstanciaPage() {
                                     children: "Seu estoque"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                    lineNumber: 102,
+                                    lineNumber: 99,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -752,7 +695,7 @@ function InstanciaPage() {
                                                             children: "ID"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                            lineNumber: 107,
+                                                            lineNumber: 104,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -760,7 +703,7 @@ function InstanciaPage() {
                                                             children: "Nome"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                            lineNumber: 108,
+                                                            lineNumber: 105,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -768,18 +711,18 @@ function InstanciaPage() {
                                                             children: "Kg"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                            lineNumber: 109,
+                                                            lineNumber: 106,
                                                             columnNumber: 41
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                    lineNumber: 106,
+                                                    lineNumber: 103,
                                                     columnNumber: 37
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                lineNumber: 105,
+                                                lineNumber: 102,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -792,7 +735,7 @@ function InstanciaPage() {
                                                                 children: alimento.id
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                                lineNumber: 120,
+                                                                lineNumber: 117,
                                                                 columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -800,7 +743,7 @@ function InstanciaPage() {
                                                                 children: alimento.nome || '-'
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                                lineNumber: 121,
+                                                                lineNumber: 118,
                                                                 columnNumber: 49
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -808,13 +751,13 @@ function InstanciaPage() {
                                                                 children: alimento.peso
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                                lineNumber: 122,
+                                                                lineNumber: 119,
                                                                 columnNumber: 49
                                                             }, this)
                                                         ]
                                                     }, alimento.id, true, {
                                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                        lineNumber: 115,
+                                                        lineNumber: 112,
                                                         columnNumber: 45
                                                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -823,40 +766,40 @@ function InstanciaPage() {
                                                         children: "Nenhum item no estoque."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                        lineNumber: 127,
+                                                        lineNumber: 124,
                                                         columnNumber: 45
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                    lineNumber: 126,
+                                                    lineNumber: 123,
                                                     columnNumber: 41
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                                lineNumber: 112,
+                                                lineNumber: 109,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 101,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                    lineNumber: 103,
+                                    lineNumber: 100,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                            lineNumber: 101,
+                            lineNumber: 98,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                    lineNumber: 82,
+                    lineNumber: 79,
                     columnNumber: 17
                 }, this),
                 alimentoSelecionado && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -870,7 +813,7 @@ function InstanciaPage() {
                                 children: "✕"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                lineNumber: 140,
+                                lineNumber: 137,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -878,7 +821,7 @@ function InstanciaPage() {
                                 children: alimentoSelecionado.nome
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                lineNumber: 146,
+                                lineNumber: 143,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -888,7 +831,7 @@ function InstanciaPage() {
                                         children: "ID:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 147,
+                                        lineNumber: 144,
                                         columnNumber: 64
                                     }, this),
                                     " ",
@@ -896,7 +839,7 @@ function InstanciaPage() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                lineNumber: 147,
+                                lineNumber: 144,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -906,7 +849,7 @@ function InstanciaPage() {
                                         children: "Peso:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 145,
                                         columnNumber: 64
                                     }, this),
                                     " ",
@@ -915,7 +858,7 @@ function InstanciaPage() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                lineNumber: 148,
+                                lineNumber: 145,
                                 columnNumber: 29
                             }, this),
                             alimentoSelecionado.perecivel && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -925,7 +868,7 @@ function InstanciaPage() {
                                         children: "Perecível:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 150,
+                                        lineNumber: 147,
                                         columnNumber: 68
                                     }, this),
                                     " ",
@@ -933,17 +876,18 @@ function InstanciaPage() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                lineNumber: 150,
+                                lineNumber: 147,
                                 columnNumber: 33
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex gap-3 mt-4",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$editItemmodal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                        id: Number(alimentoSelecionado?.id)
+                                        id: Number(alimentoSelecionado?.id),
+                                        dispensaId: Number(dispensaId)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 154,
+                                        lineNumber: 151,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -954,24 +898,24 @@ function InstanciaPage() {
                                         children: "Deletar"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                        lineNumber: 155,
+                                        lineNumber: 152,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                                lineNumber: 153,
+                                lineNumber: 150,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                        lineNumber: 139,
+                        lineNumber: 136,
                         columnNumber: 25
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/dispensa/[id]/page.tsx",
-                    lineNumber: 138,
+                    lineNumber: 135,
                     columnNumber: 21
                 }, this)
             ]
