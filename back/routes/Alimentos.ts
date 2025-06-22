@@ -90,25 +90,26 @@ try {
 }
 })
 
-router.patch(":id", async (req, res) => {
-  const { id } = req.params
-
-  const valida = alimentoSchema.safeParse(req.body)
-  if (!valida.success) {
-    res.status(400).json({ erro: valida.error })
-    return
-  }
+router.patch("/dispensa/:dispensaId/alimentos/:id", async (req, res) => {
+  const { id } = req.params;
+  const { nome, peso, perecivel } = req.body;
 
   try {
-    const carro = await prisma.alimentos.update({
+    const alimentoAtualizado = await prisma.alimentos.update({
       where: { id: Number(id) },
-      data: valida.data
-    })
-    res.status(200).json(carro)
+      data: {
+        nome,
+        peso,
+        perecivel,
+      },
+    });
+
+    res.status(200).json(alimentoAtualizado);
   } catch (error) {
-    res.status(400).json({ erro: error })
+    console.error("Erro ao atualizar alimento:", error);
+    res.status(500).json({ error: "Erro ao atualizar alimento." });
   }
-})
+});
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params

@@ -152,7 +152,7 @@ useEffect(() => {
                             )}
 
                             <div className="flex gap-3 mt-4">
-                                <EditItemModal id={Number(alimentoSelecionado?.id)}/>
+                                <EditItemModal id={Number(alimentoSelecionado?.id)} dispensaId={Number(dispensaId)} />
                                 <button
                                     onClick={() => {
                                         if (alimentoSelecionado) handleDeleteItem(alimentoSelecionado.id);

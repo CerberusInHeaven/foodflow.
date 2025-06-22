@@ -8,11 +8,11 @@ import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 
 type inputs = {
-  nome: string;
-  peso: number;
+  nome?: string;
+  peso?: number;
 };
 
-export default function EditItemModal({ id }: {  id: number }) {
+export default function EditItemModal({ id, dispensaId }: { id: number, dispensaId: number }) {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm<AlimentosItf>();
   const router = useRouter();
@@ -20,14 +20,13 @@ export default function EditItemModal({ id }: {  id: number }) {
   async function tryinput(data: inputs) {
     console.log("Dados recebidos:", data);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/dispensa/${dispensaId}/alimentos/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nome: data.nome,
           peso: Number(data.peso),
-          perecivel: "SIM",
-          id: id,
+          
         }),
       });
 
