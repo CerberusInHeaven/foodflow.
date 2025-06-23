@@ -1,5 +1,5 @@
 'use client';
-
+import { LucideUserPlus2, UserPlus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Modal from './modal';
 import { ClienteItf } from '@/app/utils/types/ClienteItf';
@@ -20,12 +20,13 @@ export default function UserModal(cliente: ClienteItf) {
 
   return (
     <>
-      <button
-        className="px-4 py-2 bg-[#2c2c2c] text-[#ffffff] rounded-md hover:bg-[#1e1e1e] font-medium"
-        onClick={() => setIsOpen(true)}
-      >
-        Criar sua Dispensa
-      </button>
+    <button
+  className="px-4 py-2 bg-[#2c2c2c] text-[#ffffff] rounded-md hover:bg-[#1e1e1e] font-medium flex justify-between"
+  onClick={() => setIsOpen(true)}
+   >
+  Adicione um usuario 
+  <LucideUserPlus2 size={16} />
+  </button>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <section className="container mx-auto px-6 py-12 md:py-16">

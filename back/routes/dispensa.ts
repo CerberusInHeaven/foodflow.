@@ -115,6 +115,12 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    
+    await prisma.alimentos.deleteMany({
+      where: { dispensaId: Number(id) },
+    });
+
+  
     const dispensa = await prisma.dispensa.delete({
       where: { id: Number(id) },
     });

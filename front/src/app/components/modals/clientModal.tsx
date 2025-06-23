@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import Modal from './modal';
 import { DispensaItf } from '@/app/utils/types/DispensaItf';
-import router from 'next/router';
-import { useForm } from 'react-hook-form';
+
+import { set, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+
 import { useClienteStore } from '@/app/context/ClienteContext';
+import { useRouter } from 'next/navigation';
 
 
 type inputs = 
@@ -21,36 +22,25 @@ export default function ClientModal({ usuarioID }: { usuarioID: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm<DispensaItf>();
   const router = useRouter();
-    async function tryinput(data: inputs) {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome: data.nome,
-          usuarioID: usuarioID,
-        }),
-      });
 
-      if (!response.ok) {
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const errorData = await response.json();
-          console.error("Erro ao enviar:", errorData);
-        } else {
-          const errorText = await response.text();
-          console.error("Erro ao enviar (texto):", errorText);
-        }
-      } else {
-        console.log("Item enviado com sucesso!");
-        setIsOpen(false);
-        router.refresh();
-        toast.success("Item enviado com sucesso!");
-      }
-    } catch (error) {
-      console.error("Erro de rede ou outra falha:", error);
+  async function tryinput(data: inputs) {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome: data.nome,
+        usuarioID: usuarioID,
+      }),
     }
-  }
+  );
+  setIsOpen(false);
+  router.push("/perfil");
+  
+} catch (error) {
+  console.error("Erro de rede ou outra falha:", error);
+}
+}
  
   return (
     <>
@@ -71,7 +61,7 @@ export default function ClientModal({ usuarioID }: { usuarioID: string }) {
           type="submit"
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         >
-          Enviar item
+          Criar Dispensa
         </button>
         </form>
       </Modal>

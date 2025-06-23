@@ -85,7 +85,7 @@ export default function Registro() {
                         <input
                             id="password"
                             type="password"
-                            placeholder="Crie uma senha forte"
+                            placeholder="A senha precisa ter no minimo 8 caracteres"
                             required
                             {...register("senha")}
                             className="w-full h-12 pl-12 pr-4 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 transition-all focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
