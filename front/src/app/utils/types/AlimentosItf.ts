@@ -5,6 +5,7 @@ export interface AlimentosItf {
     id: number
     nome: string
     peso: number
+    unidadeTipo: string
     dispensaId: number
     dispensa: DispensaItf
 }

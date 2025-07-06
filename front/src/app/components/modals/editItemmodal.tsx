@@ -42,7 +42,7 @@ export default function EditItemModal({ id, dispensaId }: { id: number, dispensa
       } else {
         console.log("Item enviado com sucesso!");
         setIsOpen(false);
-        router.refresh();
+        window.location.reload();
         toast.success("Item enviado com sucesso!");
       }
     } catch (error) {

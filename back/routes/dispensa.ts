@@ -10,6 +10,12 @@ const dispensaSchema = z.object({
   usuarioID: z.string(),
 });
 
+const membroDispensaSchema = z.object({
+  usuarioID: z.string().uuid({ message: "ID de usuário inválido (esperado UUID)." }),
+});
+
+
+
 router.get("/", async (req, res) => {
   try {
     const dispensas = await prisma.dispensa.findMany({
@@ -76,13 +82,62 @@ router.get("/:id", async (req, res) => {
       include: {
         usuario: true,
         alimentos: true,
+        membros: {
+          include: {
+            usuario: {
+              select: {
+                id: true,
+                nome: true,
+                email: true,
+              },
+            },
+          },
+        },
       },
     });
-    res.status(200).json(dispensa);
+
+    const membrosFormatados = dispensa?.membros.map(m => m.usuario) || [];
+
+    res.status(200).json({ ...dispensa, membros: membrosFormatados });
   } catch (error) {
     res.status(400).json(error);
   }
 });
+
+
+
+router.post("/:id/membro", async (req, res) => {
+  const { id } = req.params;
+
+  const valida = membroDispensaSchema.safeParse(req.body);
+  if (!valida.success) {
+    res.status(400).json({ erro: valida.error });
+    return;
+  }
+
+  const { usuarioID } = valida.data;
+
+  try {
+    const membro = await prisma.usuarioNaDispensa.create({
+      data: {
+        usuarioID,
+        dispensaID: Number(id),
+      },
+    });
+
+    const usuario = await prisma.usuario.findUnique({
+      where: { id: usuarioID },
+      select: { id: true, nome: true, email: true },
+    });
+
+    res.status(200).json(usuario);
+  } catch (error) {
+    console.error("Erro ao adicionar membro:", error);
+    res.status(400).json({ error: "Erro ao adicionar usuário à dispensa." });
+  }
+});
+
+
 
 router.patch("/:id", async (req, res) => {
   const { id } = req.params;

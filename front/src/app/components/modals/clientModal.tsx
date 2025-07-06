@@ -35,7 +35,7 @@ export default function ClientModal({ usuarioID }: { usuarioID: string }) {
     }
   );
   setIsOpen(false);
-  router.push("/perfil");
+  window.location.reload();
   
 } catch (error) {
   console.error("Erro de rede ou outra falha:", error);

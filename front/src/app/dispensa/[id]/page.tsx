@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import UserModal from "@/app/components/modals/userModal";
 import { DispensaItf } from "@/app/utils/types/DispensaItf";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { ClienteItf } from "@/app/utils/types/ClienteItf";
 
 export default function InstanciaPage() {
     const [alimentos, setPropostas] = useState<AlimentosItf[]>([]);
@@ -16,6 +17,8 @@ export default function InstanciaPage() {
     const [showForm, setShowForm] = useState(false);
     const [showConfigForm, setShowConfigForm] = useState(false);
     const [showGrafico, setShowGrafico] = useState(false);
+    const [funcionario, setFuncionario] = useState<ClienteItf[]>([]);
+
     const params = useParams();
     const dispensaId = params?.id;
     const router = useRouter();
@@ -31,15 +34,17 @@ export default function InstanciaPage() {
             }
         }
 
-        async function buscaDispensa() {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/${dispensaId}`);
-                const dados = await response.json();
-                setDispensa(dados);
-            } catch (error) {
-                console.error("Falha ao buscar dados da dispensa:", error);
-            }
+       async function buscaDispensa() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/${dispensaId}`);
+            const dados = await response.json();
+            setDispensa(dados);
+            setFuncionario(dados.membros || []); // membros já vem como [{ id, nome, email }]
+        } catch (error) {
+            console.error("Falha ao buscar dados da dispensa:", error);
         }
+        }
+
 
         if (dispensaId) {
             buscaDados();
@@ -76,7 +81,7 @@ export default function InstanciaPage() {
         }
     }
 
-    const funcionarios: string[] = [];
+
     const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff7f50", "#a28fd0", "#ffb6b9", "#c6e2ff"];
 
     return (
@@ -84,7 +89,7 @@ export default function InstanciaPage() {
             <main className="max-w-7xl mx-auto px-4 py-8">
                 <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80 mb-6">
                     <div className="flex flex-col gap-6">
-                        <h1 className="text-3xl font-bold text-slate-800">Controle do Estoque</h1>
+                        <h1 className="text-3xl font-bold text-slate-800">Controle de Dispensa</h1>
 
                         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                             <div className="relative w-full md:w-1/3">
@@ -113,7 +118,15 @@ export default function InstanciaPage() {
                                     📊 Gráfico
                                 </button>
 
-                                <UserModal id={""} nome={""} email={""} />
+                               <UserModal
+                                dispensaId={Number(dispensaId)}
+                                onUserAdded={(user) => {
+                                    setFuncionario((prev) => {
+                                    if (prev.some(f => f.id === user.id)) return prev;
+                                    return [...prev, user];
+                                    });
+                                }}
+                                />
                             </div>
                         </div>
                     </div>
@@ -123,13 +136,13 @@ export default function InstanciaPage() {
                     <div className="lg:col-span-1 bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80">
                         <h2 className="text-xl font-bold text-slate-800 mb-4">Funcionários</h2>
                         <div className="space-y-3">
-                            {funcionarios.length > 0 ? (
-                                funcionarios.map((cook, index) => (
+                            {funcionario.length > 0 ? (
+                                funcionario.map((cook, index) => (
                                     <div key={index} className="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors">
                                         <div className="p-2 bg-slate-200 rounded-full">
                                             <User className="w-5 h-5 text-slate-500" />
                                         </div>
-                                        <span className="font-medium text-slate-700">{cook}</span>
+                                        <span className="font-medium text-slate-700">{cook.nome}</span>
                                     </div>
                                 ))
                             ) : (
@@ -146,7 +159,7 @@ export default function InstanciaPage() {
                                     <tr className="border-b border-slate-200">
                                         <th className="p-3 text-sm font-semibold text-slate-500">ID</th>
                                         <th className="p-3 text-sm font-semibold text-slate-500 text-center">Nome</th>
-                                        <th className="p-3 text-sm font-semibold text-slate-500 text-right">Kg</th>
+                                        <th className="p-3 text-sm font-semibold text-slate-500 text-right"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -159,7 +172,7 @@ export default function InstanciaPage() {
                                             >
                                                 <td className="p-3 font-medium text-slate-700">{alimento.id}</td>
                                                 <td className="p-3 text-slate-600 text-center">{alimento.nome || '-'}</td>
-                                                <td className="p-3 font-medium text-slate-700 text-right">{alimento.peso}</td>
+                                                <td className="p-3 font-medium text-slate-700 text-right"><strong>{alimento.unidadeTipo}</strong> {alimento.peso}</td>
                                             </tr>
                                         ))
                                     ) : (
@@ -184,7 +197,8 @@ export default function InstanciaPage() {
                             </button>
                             <h2 className="text-2xl font-bold text-slate-800 mb-4">{alimentoSelecionado.nome}</h2>
                             <p className="mb-2 text-slate-700"><strong>ID:</strong> {alimentoSelecionado.id}</p>
-                            <p className="mb-2 text-slate-700"><strong>Peso:</strong> {alimentoSelecionado.peso} kg</p>
+                            <p className="mb-2 text-slate-700"><strong>Peso:</strong> {alimentoSelecionado.peso} {alimentoSelecionado.unidadeTipo}</p>
+                            <p className="mb-2 text-slate-700"><strong>tipoUnidade:</strong> {alimentoSelecionado.unidadeTipo} </p>
                             {alimentoSelecionado.perecivel && (
                                 <p className="mb-4 text-slate-700"><strong>Perecível:</strong> {alimentoSelecionado.perecivel}</p>
                             )}

@@ -7,8 +7,8 @@ const prisma = new PrismaClient()
 const router = Router()
 
 const clienteSchema = z.object({
-  nome: z.string().min(10,
-    { message: "Nome deve possuir, no mínimo, 10 caracteres" }),
+  nome: z.string().min(5,
+    { message: "Nome deve possuir, no mínimo, 5 caracteres" }),
   email: z.string().email(),
   senha: z.string()
 })

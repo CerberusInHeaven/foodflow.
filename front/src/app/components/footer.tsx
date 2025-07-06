@@ -2,12 +2,7 @@ import Link from "next/link";
 import { Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
 
 export function footerzinho() {
-    const socialLinks = [
-        { href: "#", icon: Twitter, name: "Twitter" },
-        { href: "#", icon: Instagram, name: "Instagram" },
-        { href: "#", icon: Youtube, name: "YouTube" },
-        { href: "#", icon: Linkedin, name: "LinkedIn" },
-    ];
+  
 
     return (
         <footer className="bg-gray-50 border-t border-gray-200">
@@ -17,7 +12,7 @@ export function footerzinho() {
                     {/* Coluna 1 Logo e Descrição */}
                     <div className="col-span-1">
                         <Link href="/" className="flex items-center space-x-3">
-                            <img src="./horde.png" className="h-10 w-auto" alt="Logo foodflow" />
+                            <img src="/horde.png" className="h-10 w-auto" alt="" />
                             <span className="text-xl font-bold text-gray-800">
                                 foodflow
                             </span>
@@ -44,11 +39,7 @@ export function footerzinho() {
                 <div className="flex flex-col sm:flex-row items-center **justify-center sm:justify-between** py-6 border-t border-gray-200">
                     <p className="text-sm text-gray-500 mb-2 sm:mb-0 text-center sm:text-left">© {new Date().getFullYear()} foodflow. Todos os direitos reservados.</p>
                     <div className="flex space-x-5">
-                        {socialLinks.map(social => (
-                            <Link key={social.name} href={social.href} className="text-gray-500 hover:text-gray-900 transition-colors">
-                                <social.icon size={20} /><span className="sr-only">{social.name}</span>
-                            </Link>
-                        ))}
+                       
                     </div>
                 </div>
             </div>

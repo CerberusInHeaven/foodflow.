@@ -40,7 +40,7 @@ export default function Perfil() {
             </div>
             <div className="md:col-span-2 space-y-6 text-center md:text-left">
               <div className="space-y-2">
-                <p className="font-semibold text-green-600">Diretor(a) de Operações</p>
+                <h3 className="font-semibold text-green-600">Bem vindo(a)</h3>
                 <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
                   {cliente?.nome || 'Nome do Usuário'}
                 </h1>

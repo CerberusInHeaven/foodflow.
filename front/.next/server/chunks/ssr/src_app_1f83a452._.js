@@ -16,15 +16,15 @@ function Modal({ isOpen, onClose, children }) {
     if (!isOpen) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         onClick: onClose,
-        className: "jsx-f1d6e2206d96d7e2" + " " + "modal-backdrop",
+        className: "jsx-1c38ac405922fb96" + " " + "modal-backdrop",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 onClick: (e)=>e.stopPropagation(),
-                className: "jsx-f1d6e2206d96d7e2" + " " + "modal-content",
+                className: "jsx-1c38ac405922fb96" + " " + "modal-content",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: onClose,
-                        className: "jsx-f1d6e2206d96d7e2" + " " + "close-btn",
+                        className: "jsx-1c38ac405922fb96" + " " + "close-btn",
                         children: "×"
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/modals/modal.tsx",
@@ -39,8 +39,8 @@ function Modal({ isOpen, onClose, children }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                id: "f1d6e2206d96d7e2",
-                children: ".modal-backdrop.jsx-f1d6e2206d96d7e2{z-index:1000;background:#00000080;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.modal-content.jsx-f1d6e2206d96d7e2{background:#fff;border-radius:8px;width:90%;max-width:500px;padding:20px;position:relative}.close-btn.jsx-f1d6e2206d96d7e2{cursor:pointer;background:0 0;border:none;font-size:1.5rem;position:absolute;top:10px;right:10px}"
+                id: "1c38ac405922fb96",
+                children: ".modal-backdrop.jsx-1c38ac405922fb96{z-index:1000;background:#00000080;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.modal-content.jsx-1c38ac405922fb96{background:#fff;border-radius:8px;width:90%;max-width:500px;padding:20px;position:relative}.close-btn.jsx-1c38ac405922fb96{cursor:pointer;background:0 0;border:none;font-size:1.5rem;position:absolute;top:10px;right:10px}"
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
@@ -89,7 +89,7 @@ function ClientModal({ usuarioID }) {
                 })
             });
             setIsOpen(false);
-            router.push("/perfil");
+            window.location.reload();
         } catch (error) {
             console.error("Erro de rede ou outra falha:", error);
         }
@@ -235,9 +235,9 @@ function Perfil() {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "space-y-2",
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                             className: "font-semibold text-green-600",
-                                            children: "Diretor(a) de Operações"
+                                            children: "Bem vindo(a)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/perfil/page.tsx",
                                             lineNumber: 43,

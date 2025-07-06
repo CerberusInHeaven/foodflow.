@@ -1,4 +1,4 @@
-import { Pereciveis, PrismaClient } from '@prisma/client'
+import { Pereciveis, PrismaClient, Unidades } from '@prisma/client'
 import { Router } from 'express'
 import { z } from 'zod'
 
@@ -11,10 +11,10 @@ const alimentoSchema = z.object({
   id  : z.number().optional(),
   nome: z.string().min(2,
     { message: "artefato deve possuir, no mínimo, 2 caracteres" }),
-peso: z.number(),
-perecivel: z.nativeEnum(Pereciveis).optional(),
-dispensaId: z.number()
- 
+  peso: z.number(),
+  perecivel: z.nativeEnum(Pereciveis).optional(),
+  dispensaId: z.number(),
+  unidadeTipo: z.nativeEnum(Unidades).optional()
 })
 
 router.get("/", async (req, res) => {
@@ -69,17 +69,18 @@ router.post("/dispensa/:dispensaId/alimentos", async (req, res) => {
     return
   }
 
-  const { nome, peso, perecivel = 'NÃO', dispensaId} = valida.data
+  const { nome, peso, unidadeTipo = "KG" ,perecivel = 'NÃO', dispensaId} = valida.data
 
 try {
   const carro = await prisma.alimentos.create({
     data: {
       nome, 
+      unidadeTipo,
       peso, 
       perecivel,
-      dispensa: { // add this property
+      dispensa: {
         connect: {
-          id: dispensaId, // replace with the actual dispensa id
+          id: dispensaId,
         },
       },
     },

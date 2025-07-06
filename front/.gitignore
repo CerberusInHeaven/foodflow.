@@ -9,7 +9,7 @@ node_modules
 /node_modules/
 /front/node_modules/
 /back/node_modules/
-
+/.next
 # Arquivos de ambiente (segurança)
 .env
 .env.local
