@@ -106,37 +106,24 @@ router.get("/:id", async (req, res) => {
 
 
 
-router.post("/:id/membro", async (req, res) => {
-  const { id } = req.params;
-
-  const valida = membroDispensaSchema.safeParse(req.body);
-  if (!valida.success) {
-    res.status(400).json({ erro: valida.error });
-    return;
-  }
-
-  const { usuarioID } = valida.data;
+router.get("/membro/:usuarioID", async (req, res) => {
+  const { usuarioID } = req.params;
 
   try {
-    const membro = await prisma.usuarioNaDispensa.create({
-      data: {
-        usuarioID,
-        dispensaID: Number(id),
+    const membros = await prisma.usuarioNaDispensa.findMany({
+      where: { usuarioID },
+      include: {
+        dispensa: true, // Retorna os dados da dispensa
       },
     });
 
-    const usuario = await prisma.usuario.findUnique({
-      where: { id: usuarioID },
-      select: { id: true, nome: true, email: true },
-    });
-
-    res.status(200).json(usuario);
+    const dispensas = membros.map((m) => m.dispensa);
+    res.status(200).json(dispensas);
   } catch (error) {
-    console.error("Erro ao adicionar membro:", error);
-    res.status(400).json({ error: "Erro ao adicionar usuário à dispensa." });
+    console.error("Erro ao buscar dispensas como membro:", error);
+    res.status(500).json({ error: "Erro ao buscar dispensas como membro." });
   }
 });
-
 
 
 router.patch("/:id", async (req, res) => {

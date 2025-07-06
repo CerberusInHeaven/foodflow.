@@ -179,7 +179,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$
 ;
 function Perfil() {
     const { cliente } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$context$2f$ClienteContext$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useClienteStore"])();
-    const [dispensas, setDispensas] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [dispensasCriadas, setDispensasCriadas] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [dispensasMembro, setDispensasMembro] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const id = cliente.id;
     const getInitial = (name)=>{
         return name?.charAt(0).toUpperCase() || 'U';
@@ -187,9 +188,14 @@ function Perfil() {
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const carregarDispensas = async ()=>{
             try {
-                const response = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/dispensa/cliente/${id}`);
-                const data = await response.json();
-                setDispensas(data);
+                const criadasRes = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/dispensa/cliente/${id}`);
+                const criadas = await criadasRes.json();
+                const membroRes = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/dispensa/membro/${id}`);
+                const membro = await membroRes.json();
+                // Remove duplicatas (caso o usuário seja dono e membro ao mesmo tempo @W@)
+                const membroFiltrado = membro.filter((d)=>!criadas.find((c)=>c.id === d.id));
+                setDispensasCriadas(criadas);
+                setDispensasMembro(membroFiltrado);
             } catch (error) {
                 console.error("Erro ao carregar dispensas:", error);
             }
@@ -198,6 +204,60 @@ function Perfil() {
     }, [
         id
     ]);
+    const renderDispensas = (lista)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6",
+            children: lista.map((dispensa)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex-grow",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                    className: "text-lg font-bold text-gray-900 mb-2",
+                                    children: dispensa.nome
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/perfil/page.tsx",
+                                    lineNumber: 48,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-slate-500 text-sm",
+                                    children: dispensa.createdAt ? new Date(dispensa.createdAt).toLocaleDateString('pt-BR', {
+                                        day: '2-digit',
+                                        month: 'long',
+                                        year: 'numeric'
+                                    }) : 'Sem data'
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/perfil/page.tsx",
+                                    lineNumber: 49,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/perfil/page.tsx",
+                            lineNumber: 47,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                            href: `/dispensa/${dispensa.id}`,
+                            className: "mt-6 inline-block text-green-600 font-semibold hover:underline self-start",
+                            children: "Ver detalhes →"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/perfil/page.tsx",
+                            lineNumber: 59,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, dispensa.id, true, {
+                    fileName: "[project]/src/app/perfil/page.tsx",
+                    lineNumber: 46,
+                    columnNumber: 9
+                }, this))
+        }, void 0, false, {
+            fileName: "[project]/src/app/perfil/page.tsx",
+            lineNumber: 44,
+            columnNumber: 5
+        }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
         className: "min-h-screen bg-slate-50 font-sans",
         children: [
@@ -217,17 +277,17 @@ function Perfil() {
                                         children: getInitial(cliente?.nome)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/perfil/page.tsx",
-                                        lineNumber: 36,
+                                        lineNumber: 75,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 35,
+                                    lineNumber: 74,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 34,
+                                lineNumber: 73,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -237,10 +297,10 @@ function Perfil() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                             className: "font-semibold text-green-600",
-                                            children: "Bem vindo(a)"
+                                            children: "Bem-vindo(a)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/perfil/page.tsx",
-                                            lineNumber: 43,
+                                            lineNumber: 82,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -248,34 +308,34 @@ function Perfil() {
                                             children: cliente?.nome || 'Nome do Usuário'
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/perfil/page.tsx",
-                                            lineNumber: 44,
+                                            lineNumber: 83,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 42,
+                                    lineNumber: 81,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 41,
+                                lineNumber: 80,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 33,
+                        lineNumber: 72,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/perfil/page.tsx",
-                    lineNumber: 32,
+                    lineNumber: 71,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/perfil/page.tsx",
-                lineNumber: 31,
+                lineNumber: 70,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -289,7 +349,7 @@ function Perfil() {
                                 children: "Suas Dispensas"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 56,
+                                lineNumber: 95,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -297,84 +357,63 @@ function Perfil() {
                                     usuarioID: id
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 58,
+                                    lineNumber: 97,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 57,
+                                lineNumber: 96,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 55,
+                        lineNumber: 94,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6",
-                        children: dispensas.map((dispensa)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex-grow",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                className: "text-lg font-bold text-gray-900 mb-2",
-                                                children: dispensa.nome
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/perfil/page.tsx",
-                                                lineNumber: 66,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-slate-500 text-sm",
-                                                children: dispensa.createdAt ? new Date(dispensa.createdAt).toLocaleDateString('pt-BR', {
-                                                    day: '2-digit',
-                                                    month: 'long',
-                                                    year: 'numeric'
-                                                }) : 'Sem data'
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/perfil/page.tsx",
-                                                lineNumber: 67,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/app/perfil/page.tsx",
-                                        lineNumber: 65,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                        href: `/dispensa/${dispensa.id}`,
-                                        className: "mt-6 inline-block text-green-600 font-semibold hover:underline self-start",
-                                        children: "Ver detalhes →"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/perfil/page.tsx",
-                                        lineNumber: 77,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, dispensa.id, true, {
-                                fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 64,
-                                columnNumber: 13
-                            }, this))
+                    dispensasCriadas.length > 0 ? renderDispensas(dispensasCriadas) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-slate-500 text-center",
+                        children: "Você ainda não criou nenhuma dispensa."
                     }, void 0, false, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 62,
-                        columnNumber: 9
+                        lineNumber: 102,
+                        columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/perfil/page.tsx",
-                lineNumber: 54,
+                lineNumber: 93,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                className: "container mx-auto px-6 py-4 md:py-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                        className: "text-2xl font-bold text-gray-900 mb-6",
+                        children: "Dispensas que você participa"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/perfil/page.tsx",
+                        lineNumber: 108,
+                        columnNumber: 9
+                    }, this),
+                    dispensasMembro.length > 0 ? renderDispensas(dispensasMembro) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-slate-500 text-center",
+                        children: "Você ainda não participa de nenhuma outra dispensa."
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/perfil/page.tsx",
+                        lineNumber: 110,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/perfil/page.tsx",
+                lineNumber: 107,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/perfil/page.tsx",
-        lineNumber: 30,
+        lineNumber: 68,
         columnNumber: 5
     }, this);
 }
