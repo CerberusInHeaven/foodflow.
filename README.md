@@ -12,12 +12,12 @@ Fernando - front-end support, concept inicial e pesquisa   <br />
 Foodflow é uma proposta de site com o intuito de simplificar o amarzenaento de alimentos no dia-a-dia <br />
 tanto no profissional quanto no caseiro.
 
-#Como rodar 
+# Como rodar 
 
 considerando que você tenha dado um git clone ou baixado o .zip <br />
 
 Na pasta back-end
 
-#Npm i --force (--force para forçar as dependencias não seguras instalarem) <br />
-#Npm run dev (Roda o script dev e suas dependencias) 
+# Npm i --force (--force para forçar as dependencias não seguras instalarem) <br />
+# Npm run dev (Roda o script dev e suas dependencias) 
 
