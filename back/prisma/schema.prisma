@@ -25,6 +25,7 @@ model Dispensa {
   Usuario   Usuario[]           @relation("UsuarioToDonoDispensa")
 
   @@map("Dispensa")
+  UsoAlimento UsoAlimento[]
 }
 
 model Alimentos {
@@ -39,6 +40,7 @@ model Alimentos {
   dispensaId  Int
 
   @@map("Alimento")
+  UsoAlimento UsoAlimento[]
 }
 
 enum Pereciveis {
@@ -67,6 +69,7 @@ model Usuario {
   Dispensa  Dispensa[]
 
   @@map("clientes")
+  UsoAlimento UsoAlimento[]
 }
 
 model UsuarioNaDispensa {
@@ -78,4 +81,18 @@ model UsuarioNaDispensa {
   dispensa Dispensa @relation(fields: [dispensaID], references: [id])
 
   @@unique([usuarioID, dispensaID])
+}
+
+model UsoAlimento {
+  id              Int       @id @default(autoincrement())
+  alimento        Alimentos @relation(fields: [alimentoId], references: [id])
+  alimentoId      Int
+  quantidadeUsada Decimal   @db.Decimal(10, 2)
+  usuario         Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId       String    @db.VarChar(36)
+  dispensa        Dispensa  @relation(fields: [dispensaId], references: [id])
+  dispensaId      Int
+  createdAt       DateTime  @default(now())
+
+  @@map("UsoAlimento")
 }

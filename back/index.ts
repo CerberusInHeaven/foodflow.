@@ -9,6 +9,7 @@ const port = 3001
 
 app.use(express.json())
 app.use(cors())
+
 app.use("/alimentos", routesCarros)
 app.use("/clientes", routesClientes)
 app.use("/clientes/login", routesLogin)

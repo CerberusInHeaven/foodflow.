@@ -5,6 +5,7 @@ import { useClienteStore } from "../context/ClienteContext"; // Usando sua lógi
 import { useRouter } from "next/navigation"; // Usando sua lógica original
 import { useState } from "react";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react"; // Usando seus ícones originais
+import Cookie from "js-cookie";
 
 export function Header() {
     const { cliente, deslogaCliente } = useClienteStore();
@@ -19,6 +20,7 @@ export function Header() {
                 localStorage.removeItem("clienteKey");
             }
             router.push("/login");
+            Cookie.remove("token");
         }
     }
 

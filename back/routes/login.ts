@@ -1,57 +1,50 @@
-import jwt from "jsonwebtoken"
-import { PrismaClient } from "@prisma/client"
-import { Router } from "express"
-import bcrypt from 'bcrypt'
+import jwt from "jsonwebtoken";
+import { PrismaClient } from "@prisma/client";
+import { Router } from "express";
+import bcrypt from "bcrypt";
 
-const prisma = new PrismaClient()
-const router = Router()
+const prisma = new PrismaClient();
+const router = Router();
 
 router.post("/", async (req, res) => {
-  const { email, senha } = req.body
-
- 
-  const mensaPadrao = "Login ou senha incorretos"
+  const { email, senha } = req.body;
+  const mensaPadrao = "Login ou senha incorretos";
 
   if (!email || !senha) {
-    
-    res.status(400).json({ erro: mensaPadrao })
-    return
+    return res.status(400).json({ erro: mensaPadrao });
   }
 
   try {
-    const cliente = await prisma.usuario.findFirst({
-      where: { email }
-    })
+    const cliente = await prisma.usuario.findFirst({ where: { email } });
 
-    if (cliente == null) {
-      
-      res.status(400).json({ erro: mensaPadrao })
-      return
+    if (!cliente) {
+      return res.status(400).json({ erro: mensaPadrao });
     }
 
-    
-    if (bcrypt.compareSync(senha, cliente.senha)) {
-      
-      const token = jwt.sign({
+    const senhaCorreta = await bcrypt.compare(senha, cliente.senha);
+    if (!senhaCorreta) {
+      return res.status(400).json({ erro: mensaPadrao });
+    }
+
+    const token = jwt.sign(
+      {
         clienteLogadoId: cliente.id,
-        clienteLogadoNome: cliente.nome
+        clienteLogadoNome: cliente.nome,
       },
-        process.env.JWT_KEY as string,
-        { expiresIn: "1h" }
-      )
+      process.env.JWT_KEY as string,
+      { expiresIn: "1h" }
+    );
 
-      res.status(200).json({
-        id: cliente.id,
-        nome: cliente.nome,
-        email: cliente.email,
-        token
-      })
-    } else {
-      res.status(400).json({ erro: mensaPadrao })
-    }
+    return res.status(200).json({
+      id: cliente.id,
+      nome: cliente.nome,
+      email: cliente.email,
+      token,
+    });
   } catch (error) {
-    res.status(400).json(error)
+    console.error("Erro interno de login:", error);
+    return res.status(500).json({ erro: "Erro interno do servidor" });
   }
-})
+});
 
-export default router
+export default router;

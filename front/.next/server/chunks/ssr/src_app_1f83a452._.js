@@ -172,7 +172,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$context$2f$ClienteContext$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/context/ClienteContext.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$modals$2f$clientModal$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/components/modals/clientModal.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/js-cookie/dist/js.cookie.mjs [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 "use client";
+;
+;
 ;
 ;
 ;
@@ -182,9 +186,18 @@ function Perfil() {
     const [dispensasCriadas, setDispensasCriadas] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [dispensasMembro, setDispensasMembro] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const id = cliente.id;
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const getInitial = (name)=>{
         return name?.charAt(0).toUpperCase() || 'U';
     };
+    const [logado, setLogado] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("token")) {
+            setLogado(true);
+        } else {
+            router.replace("/");
+        }
+    }, []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const carregarDispensas = async ()=>{
             try {
@@ -192,7 +205,7 @@ function Perfil() {
                 const criadas = await criadasRes.json();
                 const membroRes = await fetch(`${("TURBOPACK compile-time value", "http://localhost:3001")}/dispensa/membro/${id}`);
                 const membro = await membroRes.json();
-                // Remove duplicatas (caso o usuário seja dono e membro ao mesmo tempo @W@)
+                // Remove duplicatas (Só pra fazer questão que certas dispensas não spawnem na seção errada)
                 const membroFiltrado = membro.filter((d)=>!criadas.find((c)=>c.id === d.id));
                 setDispensasCriadas(criadas);
                 setDispensasMembro(membroFiltrado);
@@ -217,7 +230,7 @@ function Perfil() {
                                     children: dispensa.nome
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 48,
+                                    lineNumber: 59,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -229,13 +242,13 @@ function Perfil() {
                                     }) : 'Sem data'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 49,
+                                    lineNumber: 60,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/perfil/page.tsx",
-                            lineNumber: 47,
+                            lineNumber: 58,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -244,18 +257,18 @@ function Perfil() {
                             children: "Ver detalhes →"
                         }, void 0, false, {
                             fileName: "[project]/src/app/perfil/page.tsx",
-                            lineNumber: 59,
+                            lineNumber: 70,
                             columnNumber: 11
                         }, this)
                     ]
                 }, dispensa.id, true, {
                     fileName: "[project]/src/app/perfil/page.tsx",
-                    lineNumber: 46,
+                    lineNumber: 57,
                     columnNumber: 9
                 }, this))
         }, void 0, false, {
             fileName: "[project]/src/app/perfil/page.tsx",
-            lineNumber: 44,
+            lineNumber: 55,
             columnNumber: 5
         }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -277,17 +290,17 @@ function Perfil() {
                                         children: getInitial(cliente?.nome)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/perfil/page.tsx",
-                                        lineNumber: 75,
+                                        lineNumber: 86,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 74,
+                                    lineNumber: 85,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 73,
+                                lineNumber: 84,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -300,7 +313,7 @@ function Perfil() {
                                             children: "Bem-vindo(a)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/perfil/page.tsx",
-                                            lineNumber: 82,
+                                            lineNumber: 93,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -308,34 +321,34 @@ function Perfil() {
                                             children: cliente?.nome || 'Nome do Usuário'
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/perfil/page.tsx",
-                                            lineNumber: 83,
+                                            lineNumber: 94,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 92,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 80,
+                                lineNumber: 91,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 72,
+                        lineNumber: 83,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/perfil/page.tsx",
-                    lineNumber: 71,
+                    lineNumber: 82,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/perfil/page.tsx",
-                lineNumber: 70,
+                lineNumber: 81,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -349,7 +362,7 @@ function Perfil() {
                                 children: "Suas Dispensas"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 95,
+                                lineNumber: 106,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -357,18 +370,18 @@ function Perfil() {
                                     usuarioID: id
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/perfil/page.tsx",
-                                    lineNumber: 97,
+                                    lineNumber: 108,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/perfil/page.tsx",
-                                lineNumber: 96,
+                                lineNumber: 107,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 94,
+                        lineNumber: 105,
                         columnNumber: 9
                     }, this),
                     dispensasCriadas.length > 0 ? renderDispensas(dispensasCriadas) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -376,13 +389,13 @@ function Perfil() {
                         children: "Você ainda não criou nenhuma dispensa."
                     }, void 0, false, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 102,
+                        lineNumber: 113,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/perfil/page.tsx",
-                lineNumber: 93,
+                lineNumber: 104,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -393,7 +406,7 @@ function Perfil() {
                         children: "Dispensas que você participa"
                     }, void 0, false, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 108,
+                        lineNumber: 119,
                         columnNumber: 9
                     }, this),
                     dispensasMembro.length > 0 ? renderDispensas(dispensasMembro) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -401,19 +414,19 @@ function Perfil() {
                         children: "Você ainda não participa de nenhuma outra dispensa."
                     }, void 0, false, {
                         fileName: "[project]/src/app/perfil/page.tsx",
-                        lineNumber: 110,
+                        lineNumber: 121,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/perfil/page.tsx",
-                lineNumber: 107,
+                lineNumber: 118,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/perfil/page.tsx",
-        lineNumber: 68,
+        lineNumber: 79,
         columnNumber: 5
     }, this);
 }

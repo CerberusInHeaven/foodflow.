@@ -1,6 +1,13 @@
 import { Pereciveis, PrismaClient, Unidades } from '@prisma/client'
 import { Router } from 'express'
 import { z } from 'zod'
+import { verificaToken } from '../middlewares/verificaToken'
+import { Request } from "express";
+import { Prisma } from '@prisma/client'
+export interface AuthenticatedRequest extends Request {
+  clienteLogadoId?: string;
+  clienteLogadoNome?: string;
+}
 
 const prisma = new PrismaClient()
 
@@ -17,7 +24,7 @@ const alimentoSchema = z.object({
   unidadeTipo: z.nativeEnum(Unidades).optional()
 })
 
-router.get("/", async (req, res) => {
+router.get("/", verificaToken,  async (req, res) => {
   try {
     const alimentos = await prisma.alimentos.findMany({
     
@@ -61,7 +68,7 @@ router.get("/dispensa/:dispensaId/alimentos/:id", async (req, res) => {
   }
 });
 
-router.post("/dispensa/:dispensaId/alimentos", async (req, res) => {
+router.post("/dispensa/:dispensaId/alimentos", verificaToken, async (req, res) => {
 
   const valida = alimentoSchema.safeParse(req.body)
   if (!valida.success) {
@@ -91,7 +98,7 @@ try {
 }
 })
 
-router.patch("/dispensa/:dispensaId/alimentos/:id", async (req, res) => {
+router.patch("/dispensa/:dispensaId/alimentos/:id", verificaToken,  async (req, res) => {
   const { id } = req.params;
   const { nome, peso, perecivel } = req.body;
 
@@ -112,7 +119,7 @@ router.patch("/dispensa/:dispensaId/alimentos/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verificaToken,  async (req, res) => {
   const { id } = req.params
 
   try {
@@ -125,7 +132,100 @@ router.delete("/:id", async (req, res) => {
   }
 })
 
+router.post("/relatorio", verificaToken, async (req: AuthenticatedRequest, res) => {
+  const { alimentos, dispensaId } = req.body;
 
+  if (!Array.isArray(alimentos) || typeof dispensaId !== "number") {
+    return res.status(400).json({ error: "Dados inválidos." });
+  }
+
+  try {
+    const relatorio = await prisma.$transaction(async (tx) => {
+      const atualizados: Prisma.AlimentosGetPayload<{}>[] = [];
+
+      for (const item of alimentos as { id: number; quantidade: number }[]) {
+        const alimento = await tx.alimentos.findUnique({
+          where: { id: item.id },
+        });
+
+        if (!alimento || alimento.dispensaId !== dispensaId) {
+          throw new Error(`Alimento ID ${item.id} não encontrado ou não pertence à dispensa`);
+        }
+
+        const pesoAtual = (alimento.peso as any)?.toNumber?.() ?? Number(alimento.peso);
+        const novoPeso = pesoAtual - item.quantidade;
+
+        if (novoPeso < 0) {
+          throw new Error(`Alimento "${alimento.nome}" não possui quantidade suficiente`);
+        }
+
+        const atualizado = await tx.alimentos.update({
+          where: { id: item.id },
+          data: { peso: novoPeso },
+        });
+
+        await tx.usoAlimento.create({
+          data: {
+            alimentoId: item.id,
+            quantidadeUsada: item.quantidade,
+            usuarioId: req.clienteLogadoId ?? "",
+            dispensaId: dispensaId,
+          },
+        });
+
+        atualizados.push(atualizado);
+      }
+
+      return atualizados;
+    });
+
+    res.status(201).json(relatorio);
+  } catch (error) {
+    console.error("Erro ao registrar uso:", error);
+    res.status(500).json({ error: "Erro ao registrar uso dos alimentos." });
+  }
+});
+
+
+router.get("/relatorio/:dispensaId", verificaToken, async (req: AuthenticatedRequest, res) => {
+  const { dispensaId } = req.params;
+
+  if (isNaN(Number(dispensaId))) {
+    return res.status(400).json({ error: "ID da dispensa inválido." });
+  }
+
+  try {
+    const relatorios = await prisma.usoAlimento.findMany({
+      where: {
+        dispensaId: Number(dispensaId),
+      },
+      include: {
+        alimento: {
+          select: { nome: true, unidadeTipo: true }
+        },
+        usuario: {
+          select: { nome: true }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    const formatado = relatorios.map(r => ({
+      alimento: r.alimento.nome,
+      unidade: r.alimento.unidadeTipo,
+      quantidade: r.quantidadeUsada,
+      usuario: r.usuario.nome,
+      data: r.createdAt,
+    }));
+
+    res.status(200).json(formatado);
+  } catch (error) {
+    console.error("Erro ao buscar relatórios:", error);
+    res.status(500).json({ error: "Erro ao buscar relatórios da dispensa." });
+  }
+});
 
 
 

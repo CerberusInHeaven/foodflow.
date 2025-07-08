@@ -9,7 +9,7 @@ import UserModal from "@/app/components/modals/userModal";
 import { DispensaItf } from "@/app/utils/types/DispensaItf";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { ClienteItf } from "@/app/utils/types/ClienteItf";
-
+import Cookies from "js-cookie";
 export default function InstanciaPage() {
     const [alimentos, setPropostas] = useState<AlimentosItf[]>([]);
     const [alimentoSelecionado, setAlimentoSelecionado] = useState<AlimentosItf | null>(null);
@@ -18,11 +18,40 @@ export default function InstanciaPage() {
     const [showConfigForm, setShowConfigForm] = useState(false);
     const [showGrafico, setShowGrafico] = useState(false);
     const [funcionario, setFuncionario] = useState<ClienteItf[]>([]);
-
     const params = useParams();
     const dispensaId = params?.id;
     const router = useRouter();
+    const [logado, setLogado] = useState<boolean>(false)
+    const [mostrarUso, setMostrarUso] = useState(false);
+    const [mostrarHistorico, setMostrarHistorico] = useState(false);
+    const [historico, setHistorico] = useState<any[]>([]);
 
+
+async function buscarHistoricoUso() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/relatorio/${dispensaId}`, {
+      headers: {
+        Authorization: "Bearer " + Cookies.get("token"),
+      },
+    });
+
+    const dados = await response.json();
+    setHistorico(dados);
+    setMostrarHistorico(true);
+  } catch (error) {
+    console.error("Erro ao buscar histórico:", error);
+    alert("Erro ao buscar histórico de uso.");
+  }
+}
+
+
+  useEffect(() => {
+    if (Cookies.get("token")) {
+      setLogado(true)
+    } else {
+      router.replace("/")
+    }
+  }, [])
     useEffect(() => {
         async function buscaDados() {
             try {
@@ -72,6 +101,10 @@ export default function InstanciaPage() {
         try {
             await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/${id}`, {
                 method: 'DELETE',
+                headers: {
+                "Content-Type": "application/json",
+                 Authorization: "Bearer " + Cookies.get("token") || ""
+        },
             });
             setDispensa(null);
             setShowConfigForm(false);
@@ -117,6 +150,14 @@ export default function InstanciaPage() {
                                 >
                                     📊 Gráfico
                                 </button>
+
+                                <button
+                                    onClick={buscarHistoricoUso}
+                                    className="bg-green-500 text-white hover:bg-black flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2.5 rounded-xl font-medium transition-colors"
+                                    >
+                                    Histórico de Uso
+                                    </button>
+
 
                                <UserModal
                                 dispensaId={Number(dispensaId)}
@@ -281,9 +322,138 @@ export default function InstanciaPage() {
       </PieChart>
     </div>
   </div>
+    )}
+
+{/* Botão de abrir/fechar */}
+<div className="flex justify-end mt-6">
+  <button
+    onClick={() => setMostrarUso((prev) => !prev)}
+    className="bg-green-500 hover:bg-black text-white font-semibold py-2 px-6 rounded-xl transition-colors"
+  >
+    {mostrarUso ? "Fechar uso de alimentos" : "Registrar uso de alimentos"}
+  </button>
+</div>
+
+{/* Formulário com toggle de visibilidade */}
+{mostrarUso && (
+  <section className="mt-6 bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80">
+    <h2 className="text-xl font-bold text-slate-800 mb-4">Registrar uso de alimentos</h2>
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+
+        const entradas = alimentos
+          .map(alimento => {
+            const valor = formData.get(`alimento-${alimento.id}`);
+            const numero = Number(valor);
+            return valor && !isNaN(numero) && numero > 0
+              ? { id: alimento.id, quantidade: numero }
+              : null;
+          })
+          .filter(Boolean);
+
+        if (entradas.length === 0) return alert("Nenhuma quantidade válida informada.");
+
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/relatorio`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + Cookies.get("token"),
+            },
+            body: JSON.stringify({
+              alimentos: entradas,
+              dispensaId: Number(dispensaId),
+            }),
+          });
+
+          if (response.ok) {
+            alert("Uso registrado com sucesso.");
+            location.reload();
+          } else {
+            const erro = await response.json();
+            console.error(erro);
+            alert("Erro ao registrar uso: " + (erro?.error || "Erro desconhecido"));
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Erro inesperado.");
+        }
+      }}
+    >
+      <div className="space-y-4">
+        {alimentos.map(alimento => (
+          <div key={alimento.id} className="flex items-center gap-4">
+            <label className="w-48 font-medium text-slate-700">{alimento.nome}</label>
+            <input
+              type="number"
+              step="0.01"
+              name={`alimento-${alimento.id}`}
+              placeholder={`em ${alimento.unidadeTipo.toLowerCase()}`}
+              className="flex-1 border border-slate-300 rounded-xl px-4 py-2 text-slate-700"
+            />
+            <span className="text-sm text-slate-500">Disponível: {alimento.peso}</span>
+          </div>
+        ))}
+      </div>
+      <button
+        type="submit"
+        className="mt-6 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-xl transition-colors"
+      >
+        Enviar
+      </button>
+    </form>
+  </section>
 )}
 
-            </main>
-        </div>
-    );
-}
+{mostrarHistorico && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="bg-white p-6 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-xl border border-slate-200/80">
+      <button
+        onClick={() => setMostrarHistorico(false)}
+        className="float-right font-bold text-slate-500 hover:text-slate-700"
+      >
+        ✕
+      </button>
+
+      <h2 className="text-xl font-bold text-slate-800 mb-4">Histórico de Uso</h2>
+
+      {historico.length === 0 ? (
+        <p className="text-slate-600">Nenhum registro encontrado.</p>
+      ) : (
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-slate-300">
+              <th className="p-2">Data</th>
+              <th className="p-2">Usuário</th>
+              <th className="p-2">Alimento</th>
+              <th className="p-2">Quantidade</th>
+              <th className="p-2">Unidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {historico.map((item, index) => (
+              <tr key={index} className="border-b border-slate-100 hover:bg-slate-50">
+                <td className="p-2">{new Date(item.data).toLocaleString()}</td>
+                <td className="p-2">{item.usuario}</td>
+                <td className="p-2">{item.alimento}</td>
+                <td className="p-2">{item.quantidade}</td>
+                <td className="p-2">{item.unidade}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  </div>
+)}
+
+
+
+
+
+    </main>
+            </div>
+        );
+    }

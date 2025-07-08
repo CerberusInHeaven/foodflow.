@@ -1,6 +1,7 @@
 import { Pereciveis, PrismaClient } from '@prisma/client';
 import { Router } from 'express';
 import { z } from 'zod';
+import { verificaToken } from '../middlewares/verificaToken';
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -16,7 +17,7 @@ const membroDispensaSchema = z.object({
 
 
 
-router.get("/", async (req, res) => {
+router.get("/", verificaToken, async (req, res) => {
   try {
     const dispensas = await prisma.dispensa.findMany({
       include: {
@@ -171,5 +172,9 @@ router.delete("/:id", async (req, res) => {
     res.status(400).json(error);
   }
 });
+
+
+
+
 
 export default router;

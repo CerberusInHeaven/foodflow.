@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { AlimentosItf } from '@/app/utils/types/AlimentosItf';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
-
+import Cookies from 'js-cookie';
 type inputs = {
   nome?: string;
   peso?: number;
@@ -22,7 +22,9 @@ export default function EditItemModal({ id, dispensaId }: { id: number, dispensa
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/alimentos/dispensa/${dispensaId}/alimentos/${id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" ,
+           Authorization: "Bearer " + Cookies.get("token") || ""
+        },
         body: JSON.stringify({
           nome: data.nome,
           peso: Number(data.peso),

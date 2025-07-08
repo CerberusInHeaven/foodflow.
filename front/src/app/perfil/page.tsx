@@ -3,18 +3,29 @@ import React, { useState, useEffect } from 'react'
 import { useClienteStore } from "../context/ClienteContext"
 import ClientModal from "../components/modals/clientModal"
 import { DispensaItf } from '../utils/types/DispensaItf'
-
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'     
 export default function Perfil() {
   const { cliente } = useClienteStore()
   const [dispensasCriadas, setDispensasCriadas] = useState<DispensaItf[]>([])
   const [dispensasMembro, setDispensasMembro] = useState<DispensaItf[]>([])
   const id = cliente.id
-
+  const router = useRouter()
   const getInitial = (name: string | undefined): string => {
     return name?.charAt(0).toUpperCase() || 'U'
   }
 
+const [logado, setLogado] = useState<boolean>(false)
+
   useEffect(() => {
+    if (Cookies.get("token")) {
+      setLogado(true)
+    } else {
+      router.replace("/")
+    }
+  }, [])
+
+   useEffect(() => {
     const carregarDispensas = async () => {
       try {
      
@@ -25,7 +36,7 @@ export default function Perfil() {
         const membroRes = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/membro/${id}`);
         const membro = await membroRes.json();
 
-        // Remove duplicatas (caso o usuário seja dono e membro ao mesmo tempo @W@)
+        // Remove duplicatas (Só pra fazer questão que certas dispensas não spawnem na seção errada)
         const membroFiltrado = membro.filter(
           (d: DispensaItf) => !criadas.find((c: DispensaItf) => c.id === d.id)
         );
