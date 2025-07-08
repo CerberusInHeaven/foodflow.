@@ -2,9 +2,9 @@
 
 Feito por 
 
-Nathan- CodeBase, fullstack, prototipação inicial e wireworking <\br>
-Guilherme - Refatoração visual do design, Documentação
-Fernando - front-end support, concept inicial 
+Nathan- CodeBase, fullstack, prototipação inicial e wireworking  <br />
+Guilherme - Refatoração visual do design, Documentação   <br />
+Fernando - front-end support, concept inicial   <br />
 
 
 # Teste
