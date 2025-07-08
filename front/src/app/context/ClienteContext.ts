@@ -17,7 +17,7 @@ export const useClienteStore = create<ClienteStore>()(
             deslogaCliente: () => set({ cliente: {} as ClienteItf })
         }),
         {
-            name: 'cliente-storage', // nome da chave no localStorage
+            name: 'cliente-storage', 
         }
     )
 )

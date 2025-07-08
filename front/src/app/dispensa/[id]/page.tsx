@@ -68,7 +68,7 @@ async function buscarHistoricoUso() {
             const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/${dispensaId}`);
             const dados = await response.json();
             setDispensa(dados);
-            setFuncionario(dados.membros || []); // membros já vem como [{ id, nome, email }]
+            setFuncionario(dados.membros || []); 
         } catch (error) {
             console.error("Falha ao buscar dados da dispensa:", error);
         }
@@ -324,7 +324,7 @@ async function buscarHistoricoUso() {
   </div>
     )}
 
-{/* Botão de abrir/fechar */}
+
 <div className="flex justify-end mt-6">
   <button
     onClick={() => setMostrarUso((prev) => !prev)}
@@ -334,7 +334,7 @@ async function buscarHistoricoUso() {
   </button>
 </div>
 
-{/* Formulário com toggle de visibilidade */}
+
 {mostrarUso && (
   <section className="mt-6 bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80">
     <h2 className="text-xl font-bold text-slate-800 mb-4">Registrar uso de alimentos</h2>

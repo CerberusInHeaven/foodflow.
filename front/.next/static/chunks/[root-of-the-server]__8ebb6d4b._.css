@@ -893,12 +893,6 @@
     margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  :where(.space-x-5 > :not(:last-child)) {
-    --tw-space-x-reverse: 0;
-    margin-inline-start: calc(calc(var(--spacing) * 5) * var(--tw-space-x-reverse));
-    margin-inline-end: calc(calc(var(--spacing) * 5) * calc(1 - var(--tw-space-x-reverse)));
-  }
-
   .self-center {
     align-self: center;
   }
@@ -1476,12 +1470,6 @@
   @media (hover: hover) {
     .hover\:bg-slate-300:hover {
       background-color: var(--color-slate-300);
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:text-gray-900:hover {
-      color: var(--color-gray-900);
     }
   }
 

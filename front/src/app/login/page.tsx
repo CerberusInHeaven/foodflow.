@@ -40,7 +40,7 @@ export default function Login() {
           sameSite: 'Strict'
         })
 
-        // salva o ID no localStorage
+       
         if (data.manter) {
           localStorage.setItem("clienteKey", dados.id)
         } else {
