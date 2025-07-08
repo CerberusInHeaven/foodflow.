@@ -301,7 +301,7 @@ async function buscarHistoricoUso() {
 
       <h2 className="text-xl font-bold text-slate-800 mb-4">Distribuição do Estoque</h2>
 
-      <PieChart width={350} height={300}>
+      <PieChart width={300} height={450} className="mx-auto">
         <Pie
           data={alimentos.map(item => ({ name: item.nome, value: Number(item.peso) }))}
 
