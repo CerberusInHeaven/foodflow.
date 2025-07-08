@@ -22,7 +22,7 @@ Na pasta back-end
 # Npx prisma generate, npx prisma migrate dev -name "nomeaqui", para o prisma gerar as tabelas que existem no prisma.schema
 # Crie um .env dentro da pasta backend e escreva:
 
-DATABASE_URL="O endereço do seu banco De dados"
+DATABASE_URL="O endereço do seu banco De dados" <br />
 JWT_KEY="CHAVE12345TESTEEE"
 
 # Npm run dev (Roda o script dev e suas dependencias, assim ligando o servidor )
