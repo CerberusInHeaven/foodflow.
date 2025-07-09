@@ -17,22 +17,30 @@ export default function UserModal({ dispensaId, onUserAdded }: UserModalProps) {
   const [clientes, setClientes] = useState<ClienteItf[]>([]);
   const [membros, setMembros] = useState<ClienteItf[]>([]);
   const [clientesFiltrados, setClientesFiltrados] = useState<ClienteItf[]>([]);
-  const [usuarioLogadoId, setUsuarioLogadoId] = useState<string | null>(null);
+  const [usuarioLogadoId, setUsuarioLogadoId] = useState<number | null>(null); 
 
   const getInitial = (name: string | undefined): string => {
     return name?.charAt(0).toUpperCase() || 'U';
   };
 
   useEffect(() => {
-    const id = Cookies.get("usuarioID");
-    setUsuarioLogadoId(id ?? null);
-  }, []);
+    const carregarDados = async () => {
+      if (!isOpen) return;
 
-  useEffect(() => {
-    if (!isOpen || !usuarioLogadoId) return;
-
-    async function carregarDados() {
       try {
+       
+        const usuarioRes = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes`, {
+          headers: {
+            Authorization: 'Bearer ' + (Cookies.get('token') || ''), // ou use context, se já tiver
+          },
+        });
+
+        if (!usuarioRes.ok) throw new Error('Erro ao buscar usuário logado');
+
+        const usuarioLogado = await usuarioRes.json();
+        setUsuarioLogadoId(usuarioLogado.id);
+
+        
         const [clientesRes, dispensaRes] = await Promise.all([
           fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes`),
           fetch(`${process.env.NEXT_PUBLIC_URL_API}/dispensa/${dispensaId}`),
@@ -45,21 +53,22 @@ export default function UserModal({ dispensaId, onUserAdded }: UserModalProps) {
         setClientes(todosClientes);
         setMembros(membrosDaDispensa);
 
+        // 3. Filtrar clientes disponíveis
         const idsExcluidos = new Set([
           ...membrosDaDispensa.map(m => m.id),
-          usuarioLogadoId,
+          usuarioLogado.id,
         ]);
 
         const disponiveis = todosClientes.filter(c => !idsExcluidos.has(c.id));
         setClientesFiltrados(disponiveis);
       } catch (err) {
-        console.error('Erro ao buscar clientes ou membros:', err);
+        console.error('Erro ao buscar dados:', err);
         toast.error('Erro ao carregar usuários.');
       }
-    }
+    };
 
     carregarDados();
-  }, [isOpen, dispensaId, usuarioLogadoId]);
+  }, [isOpen, dispensaId]);
 
   const handleSelecionarUsuario = async (user: ClienteItf) => {
     try {
@@ -104,29 +113,28 @@ export default function UserModal({ dispensaId, onUserAdded }: UserModalProps) {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
             <h2 className="text-3xl font-bold text-gray-900">Selecionar Usuário</h2>
           </div>
-
-          {clientesFiltrados.length === 0 ? (
-            <p className="text-gray-500">Todos os usuários já estão na dispensa.</p>
-          ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {clientesFiltrados.map((cliente) => (
-                <button
-                  key={cliente.id}
-                  onClick={() => handleSelecionarUsuario(cliente)}
-                  className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center"
-                >
-                  <div className="w-32 h-32 bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 mb-4">
-                    <span className="text-5xl font-bold text-white select-none">
-                      {getInitial(cliente?.nome)}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">
-                    {cliente?.nome || 'Nome do Usuário'}
-                  </h3>
-                </button>
-              ))}
-            </div>
-          )}
+<div className="flex flex-col gap-4">
+  {clientesFiltrados.map((cliente) => (
+    <button
+      key={cliente.id}
+      onClick={() => handleSelecionarUsuario(cliente)}
+      className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:bg-slate-50 transition-all duration-200 flex items-center p-4 gap-4 text-left"
+    >
+      <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center shadow-md shadow-green-500/30">
+        <span className="text-2xl font-bold text-white select-none">
+          {getInitial(cliente?.nome)}
+        </span>
+      </div>
+      <div>
+        <h3 className="text-md font-semibold text-gray-900">
+          {cliente?.nome || 'Nome do Usuário'}
+        </h3>
+        <p className="text-sm text-gray-500">ID: {cliente.id}</p>
+      </div>
+    </button>
+  ))}
+</div>
+          )
         </section>
       </Modal>
     </>
