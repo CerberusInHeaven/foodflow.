@@ -21,7 +21,7 @@ export default function Login() {
 
   async function verificaLogin(data: Inputs) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}clientes/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/clientes/login`, {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify({
