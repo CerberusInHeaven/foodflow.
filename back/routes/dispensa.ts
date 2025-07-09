@@ -127,52 +127,6 @@ router.get("/membro/:usuarioID", async (req, res) => {
 });
 
 
-router.post("/:id/membro", verificaToken, async (req, res) => {
-  const { id } = req.params; // ID da dispensa
-  const valida = membroDispensaSchema.safeParse(req.body);
-
-  if (!valida.success) {
-    return res.status(400).json({ error: valida.error });
-  }
-
-  const { usuarioID } = valida.data;
-
-  try {
-    // Verifica se já é membro
-    const membroExistente = await prisma.usuarioNaDispensa.findFirst({
-      where: {
-        usuarioID,
-        dispensaId: Number(id),
-      },
-    });
-
-    if (membroExistente) {
-      return res.status(400).json({ error: "Usuário já é membro desta dispensa." });
-    }
-
-    // Cria associação
-    const novoMembro = await prisma.usuarioNaDispensa.create({
-      data: {
-        usuarioID,
-        dispensaId: Number(id),
-      },
-      include: {
-        usuario: {
-          select: {
-            id: true,
-            nome: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    res.status(201).json(novoMembro.usuario); // retorna os dados do usuário adicionado
-  } catch (error) {
-    console.error("Erro ao adicionar membro à dispensa:", error);
-    res.status(500).json({ error: "Erro ao adicionar membro à dispensa." });
-  }
-});
 
 
 
